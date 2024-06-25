@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 12:52:19 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:06:08 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,8 @@ t_ray get_ray(t_camera *c, int i, int j)
 
 	t_vec3 ray_origin = (c->defocus_angle <= 0) ? c->center : defocus_disk_sample(c);
 	t_vec3 ray_direction = vec3substr(pixel_sample, ray_origin);
-
-	return ray(ray_origin, ray_direction);
+	double ray_time = random_double(0, 1);
+	return ray(ray_origin, ray_direction, ray_time);
 }
 
 /*

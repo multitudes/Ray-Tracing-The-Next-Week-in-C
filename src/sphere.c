@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:52:10 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/24 12:50:51 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:25:24 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,26 @@ t_sphere sphere(t_point3 center, double radius, t_material *mat)
 
 	s.base.hit = hit_sphere;
 	s.center = center;
-	s.radius = radius;
+	s.center1 = center;
+	s.radius = fmax(0,radius);
 	s.mat = mat;
+	s.ismoving = false;
 	return s;
 }
 
+t_sphere movingsphere(t_point3 center1, t_point3 center2, double radius, t_material *mat);
+{
+	t_sphere s;
+
+	s.base.hit = hit_sphere;
+	s.center = center1;
+	s.center1 = center2;
+	s.radius = fmax(0,radius);
+	s.center_vec = vec3substr(center2, center1);
+	s.mat = mat;
+	s.ismoving = true;
+	return s;
+}
 /*
  * The formula for a sphere is derived from the equation of a sphere
  * (p - c) * (p - c) = r * r
@@ -79,3 +94,16 @@ void set_face_normal(t_hit_record *rec, const t_ray *r, const t_vec3 outward_nor
 	rec->normal = rec->front_face ? outward_normal : vec3negate(outward_normal);
 }
 
+/*
+ * sphere_center
+ * 
+ * time: time
+ * 
+ * returns: the center of the sphere at a given time
+ * Linearly interpolate from center1 to center2 according to time, where t=0 yields
+ * center1, and t=1 yields center2.
+ */
+t_point3 sphere_center(t_sphere s, double time) 
+{
+    return vec3add(s.center1, vec3multscalar(s.center_vec, time));
+}
