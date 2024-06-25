@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:52:10 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 15:25:24 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:11:01 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_sphere sphere(t_point3 center, double radius, t_material *mat)
 	return s;
 }
 
-t_sphere movingsphere(t_point3 center1, t_point3 center2, double radius, t_material *mat);
+t_sphere movingsphere(t_point3 center1, t_point3 center2, double radius, t_material *mat)
 {
 	t_sphere s;
 
@@ -61,7 +61,10 @@ t_sphere movingsphere(t_point3 center1, t_point3 center2, double radius, t_mater
 bool hit_sphere(const void *self, const t_ray *r, t_interval ray_t, t_hit_record *rec) 
 {
 	const t_sphere *s = (t_sphere *)self;
-    t_vec3 oc = vec3substr(s->center, r->orig);
+	t_point3 center = s->center;
+	if (s->ismoving)
+		center = sphere_center(*s, r->tm);
+    t_vec3 oc = vec3substr(center, r->orig);
     double a = length_squared(r->dir); 
     double h = dot(r->dir, oc);
 	double c = length_squared(oc) - s->radius * s->radius;
@@ -79,7 +82,7 @@ bool hit_sphere(const void *self, const t_ray *r, t_interval ray_t, t_hit_record
     }
 	rec->t = root;
 	rec->p = point_at(r, rec->t);
-	t_vec3 inters_minus_center = vec3substr(rec->p, s->center);
+	t_vec3 inters_minus_center = vec3substr(rec->p, center);
 	rec->normal = vec3divscalar(inters_minus_center, s->radius);
 	set_face_normal(rec, r, rec->normal);
 	rec->mat = s->mat;

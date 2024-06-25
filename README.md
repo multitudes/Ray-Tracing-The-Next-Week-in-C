@@ -38,9 +38,10 @@ We will add a time property to the ray struct.
 For now we will keep it simple. Adding a time parameter to the ray struct and in the camera get_ray function.
 
 ### Create a moving sphere
-In C++ it is as easy as create a new initializer for a moving sphere but in C I will create a function to initialize the moving sphere and it will not be called sphere because the name is already taken. I will call it moving_sphere.
+In C++ it is as easy as create a new initializer for a moving sphere but in C I will create a function to initialize the moving sphere and it will not be called sphere because the name is already taken. I will call it moving_sphere and it will have two centers to be able to linearly interpolate between them.
 
-```c
+Also I update the sphere's hit function to take a time parameter.
+
 
 
 

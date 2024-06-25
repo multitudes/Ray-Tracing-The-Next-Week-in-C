@@ -6,10 +6,9 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:59:14 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/24 10:57:07 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:13:27 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef HITTABLE_H
 #define HITTABLE_H
