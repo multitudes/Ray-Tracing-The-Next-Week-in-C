@@ -1,0 +1,16 @@
+{
+	"files.associations": {
+		"color.h": "c",
+		"vector.h": "c",
+		"vec3.h": "c",
+		"ray.h": "c",
+		"sphere.h": "c",
+		"stdbool.h": "c",
+		"cstdlib": "c",
+		"hittable_list.h": "c",
+		"hittable.h": "c",
+		"camera.h": "c",
+		"material.h": "c",
+		"math.h": "c"
+	}
+}

@@ -1,0 +1,1161 @@
+[
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_isalpha.o",
+   "ft_isalpha.c"
+  ],
+  "file": "ft_isalpha.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_isdigit.o",
+   "ft_isdigit.c"
+  ],
+  "file": "ft_isdigit.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_isalnum.o",
+   "ft_isalnum.c"
+  ],
+  "file": "ft_isalnum.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_isascii.o",
+   "ft_isascii.c"
+  ],
+  "file": "ft_isascii.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_isprint.o",
+   "ft_isprint.c"
+  ],
+  "file": "ft_isprint.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strlen.o",
+   "ft_strlen.c"
+  ],
+  "file": "ft_strlen.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_memset.o",
+   "ft_memset.c"
+  ],
+  "file": "ft_memset.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_bzero.o",
+   "ft_bzero.c"
+  ],
+  "file": "ft_bzero.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_memcpy.o",
+   "ft_memcpy.c"
+  ],
+  "file": "ft_memcpy.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_memmove.o",
+   "ft_memmove.c"
+  ],
+  "file": "ft_memmove.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strlcpy.o",
+   "ft_strlcpy.c"
+  ],
+  "file": "ft_strlcpy.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strlcat.o",
+   "ft_strlcat.c"
+  ],
+  "file": "ft_strlcat.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_toupper.o",
+   "ft_toupper.c"
+  ],
+  "file": "ft_toupper.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_tolower.o",
+   "ft_tolower.c"
+  ],
+  "file": "ft_tolower.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strchr.o",
+   "ft_strchr.c"
+  ],
+  "file": "ft_strchr.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strrchr.o",
+   "ft_strrchr.c"
+  ],
+  "file": "ft_strrchr.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strncmp.o",
+   "ft_strncmp.c"
+  ],
+  "file": "ft_strncmp.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_memchr.o",
+   "ft_memchr.c"
+  ],
+  "file": "ft_memchr.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_memcmp.o",
+   "ft_memcmp.c"
+  ],
+  "file": "ft_memcmp.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strnstr.o",
+   "ft_strnstr.c"
+  ],
+  "file": "ft_strnstr.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_atoi.o",
+   "ft_atoi.c"
+  ],
+  "file": "ft_atoi.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_calloc.o",
+   "ft_calloc.c"
+  ],
+  "file": "ft_calloc.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strdup.o",
+   "ft_strdup.c"
+  ],
+  "file": "ft_strdup.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_substr.o",
+   "ft_substr.c"
+  ],
+  "file": "ft_substr.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strjoin.o",
+   "ft_strjoin.c"
+  ],
+  "file": "ft_strjoin.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strtrim.o",
+   "ft_strtrim.c"
+  ],
+  "file": "ft_strtrim.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_split.o",
+   "ft_split.c"
+  ],
+  "file": "ft_split.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_itoa.o",
+   "ft_itoa.c"
+  ],
+  "file": "ft_itoa.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_strmapi.o",
+   "ft_strmapi.c"
+  ],
+  "file": "ft_strmapi.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_striteri.o",
+   "ft_striteri.c"
+  ],
+  "file": "ft_striteri.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_putchar_fd.o",
+   "ft_putchar_fd.c"
+  ],
+  "file": "ft_putchar_fd.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_putstr_fd.o",
+   "ft_putstr_fd.c"
+  ],
+  "file": "ft_putstr_fd.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_putendl_fd.o",
+   "ft_putendl_fd.c"
+  ],
+  "file": "ft_putendl_fd.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_putnbr_fd.o",
+   "ft_putnbr_fd.c"
+  ],
+  "file": "ft_putnbr_fd.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstnew.o",
+   "ft_lstnew.c"
+  ],
+  "file": "ft_lstnew.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstadd_front.o",
+   "ft_lstadd_front.c"
+  ],
+  "file": "ft_lstadd_front.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstsize.o",
+   "ft_lstsize.c"
+  ],
+  "file": "ft_lstsize.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstlast.o",
+   "ft_lstlast.c"
+  ],
+  "file": "ft_lstlast.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstadd_back.o",
+   "ft_lstadd_back.c"
+  ],
+  "file": "ft_lstadd_back.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstdelone.o",
+   "ft_lstdelone.c"
+  ],
+  "file": "ft_lstdelone.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstclear.o",
+   "ft_lstclear.c"
+  ],
+  "file": "ft_lstclear.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstiter.o",
+   "ft_lstiter.c"
+  ],
+  "file": "ft_lstiter.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_lstmap.o",
+   "ft_lstmap.c"
+  ],
+  "file": "ft_lstmap.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_itoxp.o",
+   "ft_itoxp.c"
+  ],
+  "file": "ft_itoxp.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_itox.o",
+   "ft_itox.c"
+  ],
+  "file": "ft_itox.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_itoxx.o",
+   "ft_itoxx.c"
+  ],
+  "file": "ft_itoxx.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_atol.o",
+   "ft_atol.c"
+  ],
+  "file": "ft_atol.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/ft_printf.o",
+   "ft_printf/ft_printf.c"
+  ],
+  "file": "ft_printf/ft_printf.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_.o",
+   "ft_printf/pr_.c"
+  ],
+  "file": "ft_printf/pr_.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_c.o",
+   "ft_printf/pr_c.c"
+  ],
+  "file": "ft_printf/pr_c.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_s.o",
+   "ft_printf/pr_s.c"
+  ],
+  "file": "ft_printf/pr_s.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_p.o",
+   "ft_printf/pr_p.c"
+  ],
+  "file": "ft_printf/pr_p.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_x.o",
+   "ft_printf/pr_x.c"
+  ],
+  "file": "ft_printf/pr_x.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_xx.o",
+   "ft_printf/pr_xx.c"
+  ],
+  "file": "ft_printf/pr_xx.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/base16_utils.o",
+   "ft_printf/base16_utils.c"
+  ],
+  "file": "ft_printf/base16_utils.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/base16_utils2.o",
+   "ft_printf/base16_utils2.c"
+  ],
+  "file": "ft_printf/base16_utils2.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_i.o",
+   "ft_printf/pr_i.c"
+  ],
+  "file": "ft_printf/pr_i.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/err.o",
+   "ft_printf/err.c"
+  ],
+  "file": "ft_printf/err.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/pr_u.o",
+   "ft_printf/pr_u.c"
+  ],
+  "file": "ft_printf/pr_u.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/utils.o",
+   "ft_printf/utils.c"
+  ],
+  "file": "ft_printf/utils.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/utilsflags.o",
+   "ft_printf/utilsflags.c"
+  ],
+  "file": "ft_printf/utilsflags.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "ft_printf/utilsflags2.o",
+   "ft_printf/utilsflags2.c"
+  ],
+  "file": "ft_printf/utilsflags2.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "get_next_line/get_next_line.o",
+   "get_next_line/get_next_line.c"
+  ],
+  "file": "get_next_line/get_next_line.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT/lib/libft",
+  "arguments": [
+   "cc",
+   "-fPIE",
+   "-fPIC",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "-o",
+   "get_next_line/get_next_line_utils.o",
+   "get_next_line/get_next_line_utils.c"
+  ],
+  "file": "get_next_line/get_next_line_utils.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-Iinclude",
+   "-Isrc",
+   "-O3",
+   "-Wunreachable-code",
+   "-Ofast",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/MLX42/include",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/libft",
+   "-c",
+   "src/main.c",
+   "-o",
+   "obj/main.o"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-Iinclude",
+   "-Isrc",
+   "-O3",
+   "-Wunreachable-code",
+   "-Ofast",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/MLX42/include",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/libft",
+   "-c",
+   "src/utils.c",
+   "-o",
+   "obj/utils.o"
+  ],
+  "file": "src/utils.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-Iinclude",
+   "-Isrc",
+   "-O3",
+   "-Wunreachable-code",
+   "-Ofast",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/MLX42/include",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/libft",
+   "-c",
+   "src/vec3.c",
+   "-o",
+   "obj/vec3.o"
+  ],
+  "file": "src/vec3.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-Iinclude",
+   "-Isrc",
+   "-O3",
+   "-Wunreachable-code",
+   "-Ofast",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/MLX42/include",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/libft",
+   "-c",
+   "src/color.c",
+   "-o",
+   "obj/color.o"
+  ],
+  "file": "src/color.c"
+ },
+ {
+  "directory": "/home/lbrusa/DEV/miniRT",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-Iinclude",
+   "-Isrc",
+   "-O3",
+   "-Wunreachable-code",
+   "-Ofast",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/MLX42/include",
+   "-I",
+   "./include",
+   "-I",
+   "./lib/libft",
+   "-c",
+   "src/ray.c",
+   "-o",
+   "obj/ray.o"
+  ],
+  "file": "src/ray.c"
+ }
+]
