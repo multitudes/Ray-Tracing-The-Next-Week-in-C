@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 15:06:08 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:55:45 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ t_camera camera()
 	
 	// public members
 	c.aspect_ratio = (double)16.0 / 9.0; 	// Ratio of image width over height
-	c.image_width = 1200; 					// Rendered image width in pixel count
-    c.samples_per_pixel = 500;				// Count of random samples for each pixel
-	c.max_depth = 50;						// Maximum number of ray bounces into scene
+	c.image_width = 100; 					// Rendered image width in pixel count
+    c.samples_per_pixel = 10;				// Count of random samples for each pixel
+	c.max_depth = 2;						// Maximum number of ray bounces into scene
 	
 	c.vfov = 20; 							// Vertical view angle (field of view)
     c.lookfrom = point3(13,2,3);			// Point camera is looking from
@@ -123,7 +123,9 @@ void	render(t_camera c, const t_hittablelist world)
                 }
 			write_color(file, vec3multscalar(pixel_color, c.pixel_samples_scale));
 		}
+		printf("\rScanlines remaining: %d\n", c.image_height - j - 1);
 	}
+	printf("\nDone.\n");
 	fclose(file);
 }
 
@@ -139,9 +141,6 @@ t_color	ray_color(t_ray *r, const int depth, const t_hittablelist *world)
 		t_color attenuation;
 		if (rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
 			return vec3mult(attenuation, ray_color(&scattered, depth - 1, world));
-		// t_vec3 direction = vec3add(rec.normal, random_unit_vector());
-		// t_ray scattered = ray(rec.p, direction);
-		// return vec3multscalar(ray_color(&scattered, depth - 1, world), 0.5);
 		return color(0,0,0);
 	}
 	t_vec3 unit_direction = unit_vector(r->dir);

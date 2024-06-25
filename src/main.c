@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 12:55:22 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 17:10:21 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,7 @@ int main(int argc, char **argv)
 	t_lambertian sphere_materials_lambertian[22*22];
 	t_metal sphere_materials_metal[22*22];
 	t_dielectric sphere_materials_dielectric[22*22];
-	t_sphere spheres[22*22];
-
+	t_sphere spheres[22*22+4];
 
 	for (int a = -11; a < 11; a++) 
 	{
@@ -140,6 +139,7 @@ int main(int argc, char **argv)
 		{
             double choose_mat = random_d();
             t_point3 center = point3((double)a + 0.9 * random_d(), 0.2, (double)b + 0.9*random_d());
+			t_point3 center2 = vec3add(center, vec3(0, random_double(0,.5), 0));
             if (length(vec3substr(center, point3(4, 0.2, 0))) > 0.9) 
 			{
 				if (choose_mat < 0.8) 
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 					// diffuse
 					t_color albedo = vec3cross(color_random(), color_random());
 					lambertian_init(&sphere_materials_lambertian[i], albedo);
-					spheres[i] = sphere(point3(center.x, center.y, center.z), 0.2, (t_material*)&sphere_materials_lambertian[i]);
+					spheres[i] = movingsphere(center, center2, 0.2, (t_material*)&sphere_materials_lambertian[i]); 
 					list[i] = (t_hittable*)&spheres[i];
 				} 
 				else if (choose_mat < 0.95) 
@@ -156,14 +156,14 @@ int main(int argc, char **argv)
 					t_color albedo = color_random_min_max(0.5,1);
 					double fuzz = random_double(0, 0.5);
 					metal_init(&sphere_materials_metal[i], albedo, fuzz);
-					spheres[i] = sphere(point3(center.x, center.y, center.z), 0.2, (t_material*)&sphere_materials_metal[i]);
+					spheres[i] = sphere(center, 0.2, (t_material*)&sphere_materials_metal[i]);
 					list[i] = (t_hittable*)&spheres[i];
 				} 
 				else 
 				{
 					// glass
 					dielectric_init(&sphere_materials_dielectric[i], 1.5);
-					spheres[i] = sphere(point3(center.x, center.y, center.z), 0.2, (t_material*)&sphere_materials_dielectric[i]);
+					spheres[i] = sphere(center, 0.2, (t_material*)&sphere_materials_dielectric[i]);
 					list[i] = (t_hittable*)&spheres[i];
 				}
             }
@@ -192,10 +192,13 @@ int main(int argc, char **argv)
 	list[i] = (t_hittable*)(&s4);
 	
 	const t_hittablelist world = hittablelist(list, i + 1);
+	printf("world init done ================ ");
 	
 	// init camera
     t_camera c = camera();
+	printf("camera init done ================ ");
 
 	// render
 	render(c, world);
+	return (0);
 }

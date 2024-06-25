@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:52:10 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 16:11:01 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:33:10 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_sphere sphere(t_point3 center, double radius, t_material *mat)
 	s.radius = fmax(0,radius);
 	s.mat = mat;
 	s.ismoving = false;
+	s.center_vec = vec3(0,0,0);
 	return s;
 }
 
