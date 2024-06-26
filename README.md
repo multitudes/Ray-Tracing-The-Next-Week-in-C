@@ -33,19 +33,15 @@ When a ray hits an object, instead of calculating the exact light reflection, th
 When the camera or the object moves while the shutter is open, the resulting image will have a blur effect. 
 We will add a time property to the ray struct.
 
->  If you wanted to render a sequence of images, you would need to set up the camera with the appropriate shutter timings: frame-to-frame period, shutter/render duration, and the total number of frames (total shot time). If the camera is moving and the world is static, you're good to go. However, if anything in the world is moving, you would need to add a method to hittable so that every object could be made aware of the current frame's time period. This method would provide a way for all animated objects to set up their motion during that frame. 
+Imagine having a camera. How long is the shutter open will determine if the image will have motion blur. If we have the shutter open for a 20th of a second then if a sphere is moving we will have rays hitting the sphere at different position between center 1 and center 2. I will make the position of the sphere a function of the shutter time. For now we will keep it simple. Adding a time parameter to the ray struct and in the camera get_ray function.
 
-For now we will keep it simple. Adding a time parameter to the ray struct and in the camera get_ray function.
+We will make some spheres, the matt ones, move vertically with a random speed.
 
-### Create a moving sphere
-In C++ it is as easy as create a new initializer for a moving sphere but in C I will create a function to initialize the moving sphere and it will not be called sphere because the name is already taken. I will call it moving_sphere and it will have two centers to be able to linearly interpolate between them.
+The generated picture will be looking like this:
 
-Also I update the sphere's hit function to take a time parameter.
-
-
-
-
-
+<div style="text-align: center;">
+<img src="assets/bouncing.png" alt="bouncing" style="width: 70%;display: inline-block;" />
+</div>
 
 
 
