@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 15:43:42 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 16:16:05 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/06/27 13:26:53 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "vec3.h"
 #include "color.h"
 
-
 // Example of creating a lambertian material
 // t_lambertian lambertian_material;
 
@@ -26,6 +25,21 @@ void lambertian_init(t_lambertian *lambertian_material, t_color albedo)
 {
     lambertian_material->base.scatter = lambertian_scatter; // Assign the scatter function
     lambertian_material->albedo = albedo; // Set the albedo
+	t_solid_color solid_color_texture; // set the tex from the albedo
+	solid_color_init(&solid_color_texture, albedo);
+	lambertian_material->texture = (t_texture *)&solid_color_texture;
+}
+
+void lambertian_init_tex(t_lambertian *lambertian_material, t_texture *tex) 
+{
+    lambertian_material->base.scatter = lambertian_scatter; // Assign the scatter function
+    lambertian_material->albedo = color(0,0,0); // Set the albedo to null
+	lambertian_material->texture = tex;
+}
+
+void lambertian_add_texture(t_lambertian *lambertian_material, t_texture *tex)
+{
+	lambertian_material->texture = tex;
 }
 
 void metal_init(t_metal *metal, t_color albedo, double fuzz)
@@ -53,7 +67,8 @@ bool lambertian_scatter(void* self, const t_ray *r_in, const t_hit_record *rec, 
 	if (near_zero(scatter_direction))
 		scatter_direction = rec->normal;
     *scattered = ray(rec->p, scatter_direction, r_in->tm);
-    *attenuation = lamb->albedo;
+    // *attenuation = lamb->texture->value(lamb->texture, rec->u, rec->v, &rec->p);
+	*attenuation = lamb->albedo;
         return true;
     return true; 
 }

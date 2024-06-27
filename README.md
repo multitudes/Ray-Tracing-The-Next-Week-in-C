@@ -43,6 +43,36 @@ The generated picture will be looking like this:
 <img src="assets/bouncing.png" alt="bouncing" style="width: 70%;display: inline-block;" />
 </div>
 
+# BVH (Bounding Volume Hierarchy)
+The BVH is a tree structure on a set of geometric objects.  
+Ray-object intersection is the main time-bottleneck in a ray tracer, and the run time is linear with the number of objects.  The idea is that we have an array of object where we look one by one for a hit, so it is O(n) complexity. We should be aboe to make it O(log(n)) complexity if we group the objects in a tree structure in bounding volumes.
+The bounding volumes are approximated because if we have a hit we will look for the intersection, but if not we will just move on.  This is a great optimisation.
+
+# Texture mapping
+> Texture mapping in computer graphics is the process of applying a material effect to an object in the scene. The “texture” part is the effect, and the “mapping” part is in the mathematical sense of mapping one space onto another. This effect could be any material property: color, shininess, bump geometry (called Bump Mapping), or even material existence (to create cut-out regions of the surface).  The most common type of texture mapping maps an image onto the surface of an object, defining the color at each point on the object’s surface. In practice, we implement the process in reverse: given some point on the object, we’ll look up the color defined by the texture map. 
+
+For the texture we will do something similar to the materials. Since we dont have an abstract class we will use a base pointer to the texture object and create specialized texture functions. `t_texture` is our `abstract class` and `t_solid_color` is our `concrete class`.
+```c
+typedef struct s_texture
+{
+	t_color (*value)(const void *self, double u, double v, const t_point3 *p);
+}               t_texture;
+
+typedef struct s_solid_color
+{
+	t_texture base;
+	t_color color_albedo;
+	
+}               t_solid_color;
+
+void solid_color_init(t_solid_color *solid_color_texture, t_color albedo);
+t_color solid_color_value(const void *self, double u, double v, const t_point3 *p);
+
+```
+The `value` function is a pointer to a function that will return the color of the texture at the point `p` with the coordinates `u` and `v`.
+
+To explore spatial textures, we'll implement a spatial checker_texture. For now Given these three integer results (⌊x⌋,⌊y⌋,⌊z⌋) . We take their sum and compute the result modulo two, which gives us either 0 or 1. Zero maps to the even color, and one to the odd color. Finally, we add a scaling factor to the texture, to allow us to control the size of the checker pattern in the scene.  
+
 
 
 
