@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 15:43:42 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 12:36:37 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:15:03 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ bool lambertian_scatter(void* self, const t_ray *r_in, const t_hit_record *rec, 
 	if (near_zero(scatter_direction))
 		scatter_direction = rec->normal;
     *scattered = ray(rec->p, scatter_direction, r_in->tm);
-	printf("rec->u = %f, rec->v = %f\n", rec->u, rec->v);
     if (lamb->texture && lamb->texture->value) {
          *attenuation = lamb->texture->value(lamb->texture, rec->u, rec->v, &rec->p);
- 		//  *attenuation = lamb->albedo;
    } else {
         // Fallback or error handling if texture or value function is not set
         *attenuation = lamb->albedo; // Example fallback color
