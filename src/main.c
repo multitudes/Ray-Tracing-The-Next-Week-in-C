@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/27 13:34:15 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/03 12:51:03 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,22 @@ int main()
 	// checker_texture_init(&checker_texture, 0.32, color(0.5, 0.0, 0.5), color(0.9, 0.9, 0.9));
 
 	t_lambertian lambertian_material_ground;
-	lambertian_init(&lambertian_material_ground, color(0.8, 0.8, 0.0));
+	t_solid_color solid_color_texture;
+	solid_color_init(&solid_color_texture, color(0.8, 0.8, 0.0));
+	lambertian_init_tex(&lambertian_material_ground, (t_texture*)&(solid_color_texture));
+	// lambertian_add_texture(&lambertian_material_ground, (t_texture*)&solid_color_texture);
    	// lambertian_init_tex(&lambertian_material_ground, (t_texture*)&(checker_texture));
 	
 	t_lambertian lambertian_material_center;
+	t_solid_color solid_color_texture2;
+	solid_color_init(&solid_color_texture2, color(0.1, 0.2, 0.5));
+	lambertian_init_tex(&lambertian_material_center, (t_texture*)&(solid_color_texture2));
+	// lambertian_add_texture(&lambertian_material_center, (t_texture*)&solid_color_texture2);
+   	// lambertian_init_tex(&lambertian_material_center, (t_texture*)&(checker_texture));
 	t_dielectric dielectric_material_left;
 	t_dielectric dielectric_material_bubble;
 	t_metal metal_material_right;
 
-	lambertian_init(&lambertian_material_center, color(0.1, 0.2, 0.5));
     // metal_init(&metal_material_left, color(0.8, 0.8, 0.8), 0.3);
 	dielectric_init(&dielectric_material_left, 1.50);
 	dielectric_init(&dielectric_material_bubble, 1.00 / 1.50);
@@ -82,6 +89,7 @@ int main()
 }
 
 
+// this wasthe previous main function but computationally expensive
 int bouncing()
 {
 
