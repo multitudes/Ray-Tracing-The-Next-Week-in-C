@@ -13,6 +13,7 @@
 		"material.h": "c",
 		"math.h": "c",
 		"cmath": "c",
-		"random": "c"
+		"random": "c",
+		"texture.h": "c"
 	}
 }
