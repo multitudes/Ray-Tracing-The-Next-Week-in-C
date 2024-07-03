@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 13:23:01 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:51:42 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,33 @@
 
 int main()
 {
+	// auto checker = make_shared<checker_texture>(0.32, color(.2, .3, .1), color(.9, .9, .9));
+	t_lambertian lambertian_material;
+	t_checker_texture checker_texture1;
+	t_solid_color even1;
+	t_solid_color odd1;
+	solid_color_init(&even1, color(0.2, 0.3, 0.1));
+	solid_color_init(&odd1, color(0.9, 0.9, 0.9));
+	checker_texture_init(&checker_texture1, 0.32, &even1, &odd1);
+	lambertian_init_tex(&lambertian_material, (t_texture*)&(checker_texture1));
+	t_sphere s1 = sphere(point3(0.0, -10, 0), 10.0, (t_material*)&lambertian_material);
+	t_sphere s2 = sphere(point3(0.0, 10, 0), 10, (t_material*)&lambertian_material);
+	t_hittable *list[2];
+	list[0] = (t_hittable*)(&s1);
+	list[1] = (t_hittable*)(&s2);
+	const t_hittablelist world = hittablelist(list, 2);
+		// init camera
 
-	// world
-	printf("texture init done ================ ");	
-	// t_checker_texture checker_texture;
-	// checker_texture_init(&checker_texture, 0.32, color(0.5, 0.0, 0.5), color(0.9, 0.9, 0.9));
+    t_camera c = camera();
 
+	printf("camera init done ================ ");
+	// render
+	render(c, world);
+
+
+}
+int main_checker()
+{
 	t_lambertian lambertian_material_ground;
 	t_checker_texture checker_texture;
 	t_solid_color even;
@@ -51,8 +72,6 @@ int main()
 	t_solid_color solid_color_texture2;
 	solid_color_init(&solid_color_texture2, color(0.1, 0.2, 0.5));
 	lambertian_init_tex(&lambertian_material_center, (t_texture*)&(solid_color_texture2));
-	// lambertian_add_texture(&lambertian_material_center, (t_texture*)&solid_color_texture2);
-   	// lambertian_init_tex(&lambertian_material_center, (t_texture*)&(checker_texture));
 	t_dielectric dielectric_material_left;
 	t_dielectric dielectric_material_bubble;
 	t_metal metal_material_right;
@@ -88,6 +107,7 @@ int main()
 	printf("camera init done ================ ");
 	// render
 	render(c, world);
+	return (0);
 }
 
 
