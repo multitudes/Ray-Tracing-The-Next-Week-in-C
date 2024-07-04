@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 17:23:35 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:41:00 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	render(t_camera c, const t_hittablelist world)
                 }
 			write_color(file, vec3multscalar(pixel_color, c.pixel_samples_scale));
 		}
-		printf("\rScanlines remaining: %d\n", c.image_height - j - 1);
+		// printf("\rScanlines remaining: %d\n", c.image_height - j - 1);
 	}
 	printf("\nDone.\n");
 	fclose(file);

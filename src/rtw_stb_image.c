@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:17:08 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 17:21:03 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:08:23 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,29 @@ int load(rtw_image *img, const char* filename)
 	if (!filename)
 		return (0);
 	n = img->bytes_per_pixel; // Dummy out parameter: original components per pixel
+	
+	// The stbi_loadf function from the stb_image.h library is used to load an image 
+	// file and return the image data as floating-point values. It takes several parameters, 
+	// including the filename of the image, pointers to variables that will store the image width 
+	// and height, a pointer to an integer that will store the number of channels in the image, and 
+	// the number of bytes per pixel.
+	// The function returns a pointer to the loaded image data as an array of floating-point values. 
+	// Each pixel in the image is represented by multiple floating-point values, depending on the 
+	// number of channels in the image. The exact format of the returned data depends on the image 
+	// file being loaded. 
+	// It's important to note that the returned pointer points to dynamically allocated memory, 
+	// so it's necessary to free this memory when it's no longer needed to avoid memory leaks.
     img->fdata = stbi_loadf(filename, &img->image_width, &img->image_height, &n, img->bytes_per_pixel);
     if (img->fdata == NULL) 
 		return (0);
+	printf("Image loaded - got fdata as array of float\n");
     img->bytes_per_scanline = img->image_width * img->bytes_per_pixel;
     convert_to_bytes(img);
     return (1);
 }
 
 /*
- * Clamp a value to a range and returns it
+ * Clamp a value to a range and returns it. This is the int version
  */
 int clamp_rtw(int x, int low, int high) 
 {
@@ -87,7 +100,7 @@ unsigned char float_to_byte(float value)
         return 0;
     if (1.0 <= value)
         return 255;
-    return (unsigned char)(256.0 * value);
+    return (unsigned char)(255.0 * value);
 }
 
 /*
@@ -97,7 +110,9 @@ unsigned char float_to_byte(float value)
 void convert_to_bytes(rtw_image *img) 
 {
     int total_bytes = img->image_width * img->image_height * img->bytes_per_pixel;
-    img->bdata = (unsigned char*)malloc(total_bytes);
+	printf("img width height and bytes per pixel = %d %d %d\n", img->image_width, img->image_height, img->bytes_per_pixel);
+	printf("total_bytes = %d\n", total_bytes);
+    img->bdata = malloc(total_bytes * sizeof(unsigned char));
 	if (img->bdata == NULL) {
 		fprintf(stderr, "Failed to allocate memory for image data\n");
 		exit(1);
@@ -116,10 +131,13 @@ unsigned char *pixel_data(const rtw_image *img, int x, int y)
 {
     static unsigned char magenta[] = { 255, 0, 255 };
     if (img->bdata == NULL) return magenta;
-
+	// printf(" looking up x = %d, y = %d\n", x, y);
+	
+	//int clamp(int x, int low, int high) 
     x = clamp_rtw(x, 0, img->image_width);
     y = clamp_rtw(y, 0, img->image_height);
-
+	// values should be mostly the same
+	// printf("x = %d, y = %d ===============\n", x, y);
     return img->bdata + y * img->bytes_per_scanline + x * img->bytes_per_pixel;
 }
 
