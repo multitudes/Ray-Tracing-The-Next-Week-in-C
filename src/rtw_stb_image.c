@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:17:08 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 18:08:23 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:50:55 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 /*
  * Initialize the image structure with default values.
  */
-void init_rtw_image(rtw_image *img, char *filename) 
+void init_rtw_image(t_rtw_image *img, char *filename) 
 {
     img->bytes_per_pixel = 3;
     img->fdata = NULL;
@@ -39,7 +39,6 @@ void init_rtw_image(rtw_image *img, char *filename)
 		exit(1);
 	}
 	printf("Image loaded\n");
-	
 }
 
 /*
@@ -52,7 +51,7 @@ void init_rtw_image(rtw_image *img, char *filename)
  * Load an image from a file, storing the linear floating point pixel data in the 
  * `fdata` member.
  */
-int load(rtw_image *img, const char* filename) 
+int load(t_rtw_image *img, const char* filename) 
 {
     int n; 
 	
@@ -107,7 +106,7 @@ unsigned char float_to_byte(float value)
  * Convert the linear floating point pixel data to bytes, 
  * storing the resulting byte data in the `bdata` member.
  */
-void convert_to_bytes(rtw_image *img) 
+void convert_to_bytes(t_rtw_image *img) 
 {
     int total_bytes = img->image_width * img->image_height * img->bytes_per_pixel;
 	printf("img width height and bytes per pixel = %d %d %d\n", img->image_width, img->image_height, img->bytes_per_pixel);
@@ -127,7 +126,7 @@ void convert_to_bytes(rtw_image *img)
 
 // Return the address of the three RGB bytes of the pixel at x,y. If there is no image
 // data, returns magenta.
-unsigned char *pixel_data(const rtw_image *img, int x, int y) 
+unsigned char *pixel_data(const t_rtw_image *img, int x, int y) 
 {
     static unsigned char magenta[] = { 255, 0, 255 };
     if (img->bdata == NULL) return magenta;
@@ -141,17 +140,17 @@ unsigned char *pixel_data(const rtw_image *img, int x, int y)
     return img->bdata + y * img->bytes_per_scanline + x * img->bytes_per_pixel;
 }
 
-int width(const rtw_image *img) 
+int width(const t_rtw_image *img) 
 {
     return (img->fdata == NULL) ? 0 : img->image_width;
 }
 
-int height(const rtw_image *img) 
+int height(const t_rtw_image *img) 
 {
     return (img->fdata == NULL) ? 0 : img->image_height;
 }
 
-void free_rtw_image(rtw_image *img) {
+void free_rtw_image(t_rtw_image *img) {
     if (img->fdata) {
         stbi_image_free(img->fdata);
         img->fdata = NULL;

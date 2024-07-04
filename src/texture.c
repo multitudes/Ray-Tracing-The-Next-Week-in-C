@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:06:24 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 18:15:00 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:52:34 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ t_color checker_texture_value(const void *self, double u, double v, const t_poin
 		return (((t_checker_texture*)self)->odd->color_albedo);
 }
 
-void	img_texture_init(t_img_texture *img_texture, rtw_image *img)
+void	img_texture_init(t_img_texture *img_texture, t_rtw_image *img)
 {
 	img_texture->base.value = img_texture_value;
 	img_texture->img = img;
 }
+
 t_color img_texture_value(const void *self, double u, double v, const t_point3 *p)
 {
 	// unused!
@@ -90,6 +91,6 @@ t_color img_texture_value(const void *self, double u, double v, const t_point3 *
 	double r = *pixel * color_scale;
 	double g = *(++pixel) * color_scale;
 	double b = *(++pixel) * color_scale;
-	printf("r = %f, g = %f, b = %f\n", r, g, b);
+	// printf("r = %f, g = %f, b = %f\n", r, g, b);
 	return color(r, g, b);
 }

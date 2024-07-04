@@ -189,8 +189,91 @@ We now need to update the sphere hit function to get the uv coordinates.
 ```
 From the hitpoint 𝐏, we compute the surface coordinates (𝑢,𝑣). We then use these to index into our procedural solid texture (like marble). We can also read in an image and use the 2D (𝑢,𝑣) texture coordinate to index into the image. We use texture coordinates instead of image pixel coordinates. These are just some form of fractional position in the image.  
 
-We need an image loader. We will use the stb_image.h library.  
+We need an image loader. We will use the stb_image.h library.  It is a header library because the whole library is basically included in the header file.  It has to be included once only even using guards. I included it in my `rtw_stb_image.c` file otherwise I would have compilation errors.
+- copy the `stb_image.h` file in the include folder.  
+- create a new file `rtw_stb_image.c` and include the `stb_image.h` file.  
+- add the header file `rtw_stb_image` file in the include but do not include the `stb_image.h` again.
+In the `rtw_stb_image.c` you need this at the top
+```c
+// need to include only oncd and not in the header file
+#define STB_IMAGE_IMPLEMENTATION
+#include "external/stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "external/stb_image_write.h"
+#include "rtw_stb_image.h"
+
+```
 I will take the code from the book and adapt it to C.  It will be a header file called `rtw_stb_image.h`.
+And I create a struct to handle the image being converted to bytes...
+```c
+typedef struct		s_rtw_image 
+{
+    int				bytes_per_pixel;
+    float			*fdata; // Linear floating point pixel data
+	unsigned char	*bdata; // Linear 8-bit pixel data
+    int				image_width; // Loaded image width
+    int				image_height; // Loaded image height
+    int				bytes_per_scanline;
+} 					t_rtw_image;
+```
+The `t_rtw_image` struct will hold the image data.  The `fdata` will hold the floating point pixel data and the `bdata` will hold the 8-bit pixel data.  The `bytes_per_pixel` will hold the number of bytes per pixel.  The `image_width` and `image_height` will hold the width and height of the image.  The `bytes_per_scanline` will hold the number of bytes per scanline.
+
+As usual I create the struct instance on the stack and passit to the initializer together with the relative path to my image. in this case it is a sphere and it will get the earth image.  
+```c
+void init_rtw_image(t_rtw_image *img, char *filename) 
+{
+    img->bytes_per_pixel = 3;
+    img->fdata = NULL;
+    img->bdata = NULL;
+    img->image_width = 0;
+    img->image_height = 0;
+    img->bytes_per_scanline = 0;
+	// rtw_image/earthmap.jpg
+	printf("filename = %s\n", filename);
+	if (load(img, filename) == 0) {
+		fprintf(stderr, "Failed to load image %s\n", filename);
+		exit(1);
+	}
+	printf("Image loaded\n");
+}
+```
+We will have other functions to handle the conversion...
+but for my sphere I will have a function applying the maths which will convert the value of the u,v coordinates to the pixel coordinates in the image which I loaded.  
+```c
+t_color img_texture_value(const void *self, double u, double v, const t_point3 *p)
+{
+	// unused!
+	(void)p;
+	// If we have no texture data, then return solid cyan as a debugging aid.
+	t_img_texture *image;
+	
+	image = (t_img_texture *)self;
+	if (height(image->img) <= 0) 
+		return color(0, 1, 1);
+	
+	// Clamp input texture coordinates to [0,1] x [1,0]
+	u = clamp(interval(0, 1), u);
+	v = 1.0 - clamp(interval(0, 1), v); // Flip V to image coordinates
+	// printf("u = %f,	 v = %f\n", u, v);
+	int i = (int)(u * width(image->img));
+	int j = (int)(v * height(image->img));
+	// pixel is a pointer to the first byte of the RGB triplet
+	unsigned char *pixel = pixel_data(image->img, i, j);
+	// Scale color values to [0,1]
+	double color_scale = 1.0 / 255.0;
+	double r = *pixel * color_scale;
+	double g = *(++pixel) * color_scale;
+	double b = *(++pixel) * color_scale;
+	// printf("r = %f, g = %f, b = %f\n", r, g, b);
+	return color(r, g, b);
+}
+```
+And it will return a color.
+This is how the sphere looks like with the earth image as a texture.
+<div style="text-align: center;">
+<img src="assets/earth.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
 
 We create this helper function — `pixel_data(int x, int y)` — to get the 8-bit RGB byte values for each pixel.  
 

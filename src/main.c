@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 17:19:28 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:42:58 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@
 
 int main()
 {
-	t_lambertian lambertian_material;
-	rtw_image img;
+	t_lambertian earth_surface;
+	t_rtw_image img;
 	init_rtw_image(&img,"rtw_image/earthmap.jpg");
 	t_img_texture img_texture;
 	img_texture_init(&img_texture, &img);
-	lambertian_init_tex(&lambertian_material, (t_texture*)&img_texture);
-	t_sphere s1 = sphere(point3(0.0, -10, 0), 10.0, (t_material*)&lambertian_material);
+	lambertian_init_tex(&earth_surface, (t_texture*)&img_texture);
+	t_sphere s1 = sphere(point3(0.0, 0, 0), 2.0, (t_material*)&earth_surface);
 	t_hittable *list[1];
 	list[0] = (t_hittable*)(&s1);
 	const t_hittablelist world = hittablelist(list, 1);
