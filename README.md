@@ -274,8 +274,7 @@ This is how the sphere looks like with the earth image as a texture.
 <img src="assets/earth.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
-
-We create this helper function — `pixel_data(int x, int y)` — to get the 8-bit RGB byte values for each pixel.  
+# Perlin Noise
 
 
 
