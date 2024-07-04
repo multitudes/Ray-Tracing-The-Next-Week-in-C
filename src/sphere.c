@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:52:10 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 16:33:10 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:01:34 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ bool hit_sphere(const void *self, const t_ray *r, t_interval ray_t, t_hit_record
 	t_vec3 inters_minus_center = vec3substr(rec->p, center);
 	rec->normal = vec3divscalar(inters_minus_center, s->radius);
 	set_face_normal(rec, r, rec->normal);
+	get_sphere_uv(rec->normal, &rec->u, &rec->v);
 	rec->mat = s->mat;
 
 	return (true);
@@ -110,4 +111,24 @@ void set_face_normal(t_hit_record *rec, const t_ray *r, const t_vec3 outward_nor
 t_point3 sphere_center(t_sphere s, double time) 
 {
     return vec3add(s.center1, vec3multscalar(s.center_vec, time));
+}
+
+/*
+ * get_sphere_uv
+ * 
+ * p: point / the outward normal on the sphere
+ * u: u
+ * v: v
+ * 
+ * returns: the uv coordinates of a sphere
+ */
+void	get_sphere_uv(t_vec3 normal, double* u, double* v)
+{
+    double theta;
+    double phi;
+
+	theta = acos(-normal.y);
+	phi = atan2(-normal.z, normal.x) + M_PI;
+    *u = phi / (2 * M_PI);
+    *v = theta / M_PI;
 }

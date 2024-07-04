@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:52:56 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/25 16:12:57 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:01:44 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ bool		hit_sphere(const void* self, const t_ray *r, t_interval ray_t,  t_hit_reco
 void 		set_face_normal(t_hit_record *rec, const t_ray *r, const t_vec3 outward_normal);
 
 t_point3 	sphere_center(t_sphere s, double time);
+void		get_sphere_uv(t_vec3 normal, double* u, double* v);
 
 #endif

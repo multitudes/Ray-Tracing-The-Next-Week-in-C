@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 13:52:20 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:23:35 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ t_camera camera()
 	c.max_depth = 50;						// Maximum number of ray bounces into scene
 	
 	c.vfov = 20; 							// Vertical view angle (field of view)
-    c.lookfrom = point3(13,2,3);			// Point camera is looking from
+    c.lookfrom = point3(0,0,50);			// Point camera is looking from
     c.lookat = point3(0,0,0);				// Point camera is looking at
     c.vup = vec3(0,1,0);					// Camera-relative "up" direction
 	
-    c.defocus_angle = 0.6; 					// Variation angle of rays through each pixel
+    c.defocus_angle = 0; 					// Variation angle of rays through each pixel
     c.focus_dist = 10;						// Distance from camera lookfrom point to plane of perfect focus
 
 	// initialize the camera from public members

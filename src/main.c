@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 13:51:42 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:19:28 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,31 @@
 #include <float.h>
 #include <camera.h>
 #include "texture.h"
+#include "rtw_stb_image.h"
 
 int main()
+{
+	t_lambertian lambertian_material;
+	rtw_image img;
+	init_rtw_image(&img,"rtw_image/earthmap.jpg");
+	t_img_texture img_texture;
+	img_texture_init(&img_texture, &img);
+	lambertian_init_tex(&lambertian_material, (t_texture*)&img_texture);
+	t_sphere s1 = sphere(point3(0.0, -10, 0), 10.0, (t_material*)&lambertian_material);
+	t_hittable *list[1];
+	list[0] = (t_hittable*)(&s1);
+	const t_hittablelist world = hittablelist(list, 1);
+		// init camera
+
+    t_camera c = camera();
+
+	printf("camera init done ================ ");
+	// render
+	render(c, world);
+	return (0);
+}
+
+int main_two_spheres_checker()
 {
 	// auto checker = make_shared<checker_texture>(0.32, color(.2, .3, .1), color(.9, .9, .9));
 	t_lambertian lambertian_material;
@@ -54,7 +77,7 @@ int main()
 	printf("camera init done ================ ");
 	// render
 	render(c, world);
-
+	return (0);
 
 }
 int main_checker()
@@ -114,8 +137,6 @@ int main_checker()
 // this wasthe previous main function but computationally expensive
 int bouncing()
 {
-
-	
 	t_lambertian ground;
    	lambertian_init(&ground, color(0.5, 0.5, 0.5));
 	t_sphere s1 = sphere(point3(0.0, -1000, 0), 1000.0, (t_material*)&ground);

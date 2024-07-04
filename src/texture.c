@@ -6,13 +6,14 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:06:24 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 13:23:31 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:20:06 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "texture.h"
 #include "color.h"
 #include <math.h>
+#include "rtw_stb_image.h"
 
 void	solid_color_init(t_solid_color *solid_color_texture, t_color albedo)
 {
@@ -57,4 +58,33 @@ t_color checker_texture_value(const void *self, double u, double v, const t_poin
 		return (((t_checker_texture*)self)->even->color_albedo);
 	else
 		return (((t_checker_texture*)self)->odd->color_albedo);
+}
+
+void	img_texture_init(t_img_texture *img_texture, rtw_image *img)
+{
+	img_texture->base.value = img_texture_value;
+	// img_texture->filename = filename;
+	img_texture->img = img;
+}
+t_color img_texture_value(const void *self, double u, double v, const t_point3 *p)
+{
+	// unused!
+	(void)p;
+	// If we have no texture data, then return solid cyan as a debugging aid.
+	t_img_texture *image = (t_img_texture *)self;
+	if (height(image->img) <= 0) 
+		return color(0,1,1);
+	// Clamp input texture coordinates to [0,1] x [1,0]
+	u = clamp_rtw(u, 0, 1);
+	v = 1.0 - clamp_rtw(v, 0, 1); // Flip V to image coordinates
+	
+	int i = (int)(u * width(image->img));
+	int j = (int)(v * height(image->img));
+	unsigned char *pixel = pixel_data(image->img, i, j);
+	// Scale color values to [0,1]
+	double color_scale = 1.0 / 255.0;
+	double r = *pixel / 255.0 * color_scale;
+	double g = *(pixel + 1) / 255.0 * color_scale;
+	double b = *(pixel + 2) / 255.0 * color_scale;
+	return color(r, g, b);
 }

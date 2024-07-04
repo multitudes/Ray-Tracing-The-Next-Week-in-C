@@ -72,9 +72,127 @@ t_color solid_color_value(const void *self, double u, double v, const t_point3 *
 ```
 The `value` function is a pointer to a function that will return the color of the texture at the point `p` with the coordinates `u` and `v`.
 
+### first try
 To explore spatial textures, we'll implement a spatial checker_texture. For now given these three integer results (⌊x⌋,⌊y⌋,⌊z⌋), we take their sum and compute the result modulo two, which gives us either 0 or 1. Zero maps to the even color, and one to the odd color. Finally, we add a scaling factor to the texture, to allow us to control the size of the checker pattern in the scene.  
+It is not perfect because we check only if the point in 3d is a 0 or a one, not the surface..
+We will use the `checker_texture` struct and the `checker_texture_init` function to initialize it.  For a start then the lambertian material will have a texture instead of a color.  
+```c
+typedef struct s_texture
+{
+	t_color (*value)(const void *self, double u, double v, const t_point3 *p);
+}               t_texture;
 
+typedef struct s_solid_color
+{
+	t_texture base;
+	t_color color_albedo;
+}               t_solid_color;
 
+// the albedo is now part of the texture
+void	solid_color_init(t_solid_color *solid_color_texture, t_color albedo)
+{
+	solid_color_texture->base.value = solid_color_value;
+	solid_color_texture->color_albedo = albedo;
+}	
+
+// we dont care about the surface coordinates for now
+t_color solid_color_value(const void *self, double u, double v, const t_point3 *p)
+{
+	(void)u;
+	(void)v;
+	(void)p;
+	t_solid_color *solid_color = (t_solid_color *)self;
+	return (solid_color->color_albedo);
+}
+
+void lambertian_init_tex(t_lambertian *lambertian_material, t_texture *tex) 
+{
+    lambertian_material->base.scatter = lambertian_scatter; // Assign the scatter function
+    lambertian_material->albedo = color(0,0,0); // Set the albedo to null
+	lambertian_material->texture = tex;
+}
+```
+So the value fuction will return a color based on the texture. And all is like before. But we eill implement a new texture, the checker_texture. It will have a scale, and two colors, one for the even and one for the odd.  Really in the book it assignes textures to the even and odd but we will use the solid_color for now.  
+```c
+
+typedef struct 		s_checker_texture
+{
+	t_texture 		base;
+	double    		inv_scale;
+	t_solid_color 	*even;
+	t_solid_color 	*odd;
+}               	t_checker_texture;
+/*
+** Checker texture
+* colors for the checkerboard ex
+* even_color = color(0.5, 0.0, 0.5); // Purple
+* odd_color = color(1.0, 1.0, 1.0); // White
+*/
+void	checker_texture_init(t_checker_texture *checker_texture, double scale, t_solid_color *even, t_solid_color *odd)
+{
+	printf("checker_texture_init done ================ ");
+	checker_texture->base.value = checker_texture_value;
+	checker_texture->inv_scale = 1.0 / scale;
+	checker_texture->even = even;
+	checker_texture->odd = odd;
+}
+
+t_color checker_texture_value(const void *self, double u, double v, const t_point3 *p)
+{
+	(void)u;
+	(void)v;
+	int xint = (int)floor(p->x * ((t_checker_texture*)self)->inv_scale);	
+	int yint = (int)floor(p->y * ((t_checker_texture*)self)->inv_scale);
+	int zint = (int)floor(p->z * ((t_checker_texture*)self)->inv_scale);
+
+	bool is_even = (xint + yint + zint) % 2 == 0;
+	if (is_even)
+		return (((t_checker_texture*)self)->even->color_albedo);
+	else
+		return (((t_checker_texture*)self)->odd->color_albedo);
+}
+
+```
+The `checker_texture_value` function will return the color of the texture at the point `p`.
+This are some of the results we can get.
+
+<div style="text-align: center;">
+<img src="assets/two spheres.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
+### Second try
+It is looking good but we can see some imperfection or glitches. Since checker_texture is a spatial texture, we're really looking at the surface of the sphere cutting through the three-dimensional checker space.
+
+Now it's time to make use of the 𝑢,𝑣 texture coordinates.  
+
+### get the 𝑢,𝑣 coordinates of a sphere.
+(see the book for an indepth math explanation)
+
+My sphere will get a new function to get the uv coordinates for each point on the surface.  
+With these I can get the value of the texture at the point.  The texture will be usually an image file. 
+
+```c
+void	get_sphere_uv(const t_point3* p, double* u, double* v)
+{
+    double theta;
+    double phi;
+
+	theta = acos(-p->y);
+	phi = atan2(-p->z, p->x) + M_PI;
+    *u = phi / (2 * M_PI);
+    *v = theta / M_PI;
+}
+```
+We now need to update the sphere hit function to get the uv coordinates.  
+```c
+
+```
+From the hitpoint 𝐏, we compute the surface coordinates (𝑢,𝑣). We then use these to index into our procedural solid texture (like marble). We can also read in an image and use the 2D (𝑢,𝑣) texture coordinate to index into the image. We use texture coordinates instead of image pixel coordinates. These are just some form of fractional position in the image.  
+
+We need an image loader. We will use the stb_image.h library.  
+I will take the code from the book and adapt it to C.  It will be a header file called `rtw_stb_image.h`.
+
+We create this helper function — `pixel_data(int x, int y)` — to get the 8-bit RGB byte values for each pixel.  
 
 
 

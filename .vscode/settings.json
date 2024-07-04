@@ -14,6 +14,8 @@
 		"math.h": "c",
 		"cmath": "c",
 		"random": "c",
-		"texture.h": "c"
+		"texture.h": "c",
+		"stb_image.h": "c",
+		"rtw_stb_image.h": "c"
 	}
 }
