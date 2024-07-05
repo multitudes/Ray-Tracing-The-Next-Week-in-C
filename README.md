@@ -426,9 +426,38 @@ So this is what I got.
 
 Of course I need to tweak the init function to get the disk created around a center and not a corner.  
 
+<div style="text-align: center;">
+<img src="assets/disks2.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
 
+The disks above are created in the same way way as the parallelograms. They are then drawn inside them.
 
+This time I pass the u and v vectors to the disk interior function because the vectors are not orthogonal.
+```c
+bool is_interior_disk(double a, double b, t_hit_record *rec, t_vec3 u, t_vec3 v) 
+{
+    // The center of the disk in plane coordinates is (0.5, 0.5)
+    double u_squared = (a - 0.5) * (a - 0.5);
+    double v_squared = (b - 0.5) * (b - 0.5);
+    double uv = (a - 0.5) * (b - 0.5);
 
+    // The radius of the disk is 0.5 in plane coordinates
+    double radius_squared = 0.25;
+
+    // The angle between the vectors u and v
+    double cos_theta = dot(u, v) / (length(u) * length(v));
+
+    // The distance from the point to the center of the disk in the plane coordinates of the parallelogram
+    double distance_squared = u_squared + v_squared - 2 * uv * cos_theta;
+
+    if (distance_squared > radius_squared)
+        return false;
+
+    rec->u = a;
+    rec->v = b;
+    return true;
+}
+```
 
 
 

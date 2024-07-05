@@ -16,6 +16,8 @@
 		"random": "c",
 		"texture.h": "c",
 		"stb_image.h": "c",
-		"rtw_stb_image.h": "c"
+		"rtw_stb_image.h": "c",
+		"stdio.h": "c",
+		"disk.h": "c"
 	}
 }

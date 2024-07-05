@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 09:13:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 12:27:05 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 13:11:42 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool hit_disk(const void* self, const t_ray *r, t_interval ray_t,  t_hit_record 
 	double alpha = dot(disk->w, cross(planar_hitpt_vector, disk->v));
 	double beta = dot(disk->w, cross(disk->u, planar_hitpt_vector));
 
-	if (!is_interior_disk(alpha, beta, rec))
+	if (!is_interior_disk(alpha, beta, rec, disk->u, disk->v))
 		return false;
 
 	// Ray hits the 2D shape; set the rest of the hit record and return true.
@@ -64,15 +64,26 @@ bool hit_disk(const void* self, const t_ray *r, t_interval ray_t,  t_hit_record 
 	return true;
 }
 
-bool is_interior_disk(double a, double b, t_hit_record *rec) 
+bool is_interior_disk(double a, double b, t_hit_record *rec, t_vec3 u, t_vec3 v) 
 {
-    // The center of the disk in plane coordinates is (0, 0)
-    double distance = sqrt(a * a + b * b);
+    // The center of the disk in plane coordinates is (0.5, 0.5)
+    double u_squared = (a - 0.5) * (a - 0.5);
+    double v_squared = (b - 0.5) * (b - 0.5);
+    double uv = (a - 0.5) * (b - 0.5);
 
-    // The radius of the disk is 1 in plane coordinates
-    if (distance > 1)
-		return false;
-	rec->u = a;
-	rec->v = b;
-	return true;
+    // The radius of the disk is 0.5 in plane coordinates
+    double radius_squared = 0.25;
+
+    // The angle between the vectors u and v
+    double cos_theta = dot(u, v) / (length(u) * length(v));
+
+    // The distance from the point to the center of the disk in the plane coordinates of the parallelogram
+    double distance_squared = u_squared + v_squared - 2 * uv * cos_theta;
+
+    if (distance_squared > radius_squared)
+        return false;
+
+    rec->u = a;
+    rec->v = b;
+    return true;
 }
