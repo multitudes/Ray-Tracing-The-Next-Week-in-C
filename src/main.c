@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 11:15:05 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:31:56 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #include "texture.h"
 #include "rtw_stb_image.h"
 #include "quad.h"
+#include "disk.h"
 
 int main()
 {
@@ -59,11 +60,11 @@ int main()
 	lambertian_init_tex(&upper_orange_lam, (t_texture*)&upper_orange);
 	lambertian_init_tex(&lower_teal_lam, (t_texture*)&lower_teal);
 
-	t_quad q1 = quad(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), (t_material*)&left_red_lam);
-	t_quad q2 = quad(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), (t_material*)&back_green_lam);
-	t_quad q3 = quad(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), (t_material*)&right_blue_lam);
-	t_quad q4 = quad(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), (t_material*)&upper_orange_lam);
-	t_quad q5 = quad(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), (t_material*)&lower_teal_lam);
+	t_disk q1 = disk(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), (t_material*)&left_red_lam);
+	t_disk q2 = disk(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), (t_material*)&back_green_lam);
+	t_disk q3 = disk(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), (t_material*)&right_blue_lam);
+	t_disk q4 = disk(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), (t_material*)&upper_orange_lam);
+	t_disk q5 = disk(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), (t_material*)&lower_teal_lam);
 
 	t_hittable *list[5];
 
@@ -72,6 +73,7 @@ int main()
 	list[2] = (t_hittable*)(&q3);
 	list[3] = (t_hittable*)(&q4);
 	list[4] = (t_hittable*)(&q5);
+	
 	const t_hittablelist world = hittablelist(list, 5);
 	
 	// init camera

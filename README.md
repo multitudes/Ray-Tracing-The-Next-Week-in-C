@@ -408,7 +408,23 @@ and the result is this:
 <img src="assets/quads.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
+## all 2d shapes are definite by the `interior` function
+```c
 
+```
+
+So as in the book I managed to change the function for a disk.... and created a disk struct etc.  
+The init for a disk is a duplicate of the init for a quad, because I first create the plane on which the disk is and then I create the disk.  
+
+So this is what I got. 
+
+
+
+<div style="text-align: center;">
+<img src="assets/disks.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div> 
+
+Of course I need to tweak the init function to get the disk created around a center and not a corner.  
 
 
 
