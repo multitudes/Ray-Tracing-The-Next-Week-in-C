@@ -337,7 +337,76 @@ $$
 
 So we add the double D and the normal to our quad struct.
 
+This is the updated struct and the hit function.
+```c
+typedef struct s_quad
+{
+	t_hittable  base;
+	t_point3	q;
+	t_vec3		u;
+	t_vec3		v;
+	t_material	*mat;
+	double		d;
+	t_vec3		normal;
+	t_vec3		w;
+}				t_quad;
 
+t_quad quad(t_point3 q, t_vec3 u, t_vec3 v, t_material *mat)
+{
+	t_quad qd;
+
+	qd.base.hit = hit_quad;
+	qd.q = q;
+	qd.u = u;
+	qd.v = v;
+	qd.mat = mat;
+	t_vec3 n = cross(u, v);
+    qd.normal = unit_vector(n);
+    qd.d = dot(qd.normal, q);
+	qd.w = vec3divscalar(n, dot(n, n));
+	
+	return (qd);
+}
+
+bool hit_quad(const void* self, const t_ray *r, t_interval ray_t,  t_hit_record *rec)
+{
+	// printf("hit_quad ----------------------********\n");
+	const t_quad *qd = (t_quad *)self;
+	double denom = dot(qd->normal, r->dir);
+	// no hit if ray is parallel to the quad
+	if (fabs(denom) < 1e-8)
+		return false;
+
+	// Return false if the hit point parameter t is outside the ray interval.
+	double t = (qd->d - dot(qd->normal, r->orig)) / denom;
+	if (!contains(&ray_t, t))
+		return false;
+	
+	// Determine the hit point lies within the planar shape using its plane coordinates.
+	// t_point3	point_at(const t_ray *ray, double t)
+	t_point3 intersection = point_at(r, t);
+	t_vec3 planar_hitpt_vector = vec3substr(intersection, qd->q);
+	double alpha = dot(qd->w, cross(planar_hitpt_vector, qd->v));
+	double beta = dot(qd->w, cross(qd->u, planar_hitpt_vector));
+
+	if (!is_interior(alpha, beta, rec))
+		return false;
+
+	// Ray hits the 2D shape; set the rest of the hit record and return true.
+	rec->t = t;
+	rec->p = intersection;
+	rec->mat = qd->mat;
+	set_face_normal(rec, r, qd->normal);
+
+	return true;
+}
+
+```
+
+and the result is this:
+<div style="text-align: center;">
+<img src="assets/quads.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
 
 
 

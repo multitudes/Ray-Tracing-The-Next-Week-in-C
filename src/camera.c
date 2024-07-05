@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 09:34:30 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:55:19 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ t_camera camera()
 	t_camera c;
 	
 	// public members
-	c.aspect_ratio = (double)16.0 / 9.0; 	// Ratio of image width over height
-	c.image_width = 800; 					// Rendered image width in pixel count
+	c.aspect_ratio = (double)16.0 / 16.0; 	// Ratio of image width over height
+	c.image_width = 400; 					// Rendered image width in pixel count
     c.samples_per_pixel = 100;				// Count of random samples for each pixel
 	c.max_depth = 50;						// Maximum number of ray bounces into scene
 	
-	c.vfov = 20; 							// Vertical view angle (field of view)
-    c.lookfrom = point3(0,0,16);			// Point camera is looking from
+	c.vfov = 80; 							// Vertical view angle (field of view)
+    c.lookfrom = point3(0,0,9);			// Point camera is looking from
     c.lookat = point3(0,0,0);				// Point camera is looking at
     c.vup = vec3(0,1,0);					// Camera-relative "up" direction
 	
@@ -90,7 +90,7 @@ t_camera camera()
 
 	printf("pixel00_loc: ");
 	print_vec3(&c.pixel00_loc);
-
+	printf("camera initialized\n");
 	return c;
 }
 
@@ -100,7 +100,7 @@ void	render(t_camera c, const t_hittablelist world)
 	// render
 	// for the book course we create a ppm image
 	// create_ppm_image("test.ppm", WIDTH, HEIGHT);
-
+	printf("Rendering image...\n");
 	FILE *file;
 	char filepath[PATH_MAX];
 
@@ -135,7 +135,7 @@ t_color	ray_color(t_ray *r, const int depth, const t_hittablelist *world)
 	t_hit_record rec;
 	if (depth <= 0)
         return color(0,0,0);
-	if ((world)->hit(world, r, interval(0.001, INFINITY), &rec))
+	if (world->hit(world, r, interval(0.001, INFINITY), &rec))
 	{
 		t_ray scattered;
 		t_color attenuation;

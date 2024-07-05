@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 09:34:30 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 11:15:05 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,71 @@
 #include <camera.h>
 #include "texture.h"
 #include "rtw_stb_image.h"
+#include "quad.h"
 
 int main()
+{
+	t_solid_color left_red;
+	t_solid_color back_green;
+	t_solid_color right_blue;
+	t_solid_color upper_orange;
+	t_solid_color lower_teal;
+
+	solid_color_init(&left_red, color(1.0, 0.2, 0.2));
+	solid_color_init(&back_green, color(0.2, 1.0, 0.2));
+	solid_color_init(&right_blue, color(0.2, 0.2, 1.0));
+	solid_color_init(&upper_orange, color(1.0, 0.5, 0.2));
+	solid_color_init(&lower_teal, color(0.2, 0.5, 1.0));
+
+
+	t_lambertian left_red_lam;
+	t_lambertian back_green_lam;
+	t_lambertian right_blue_lam;
+	t_lambertian upper_orange_lam;
+	t_lambertian lower_teal_lam;
+	
+	lambertian_init_tex(&left_red_lam, (t_texture*)&left_red);
+	lambertian_init_tex(&back_green_lam, (t_texture*)&back_green);
+	lambertian_init_tex(&right_blue_lam, (t_texture*)&right_blue);
+	lambertian_init_tex(&upper_orange_lam, (t_texture*)&upper_orange);
+	lambertian_init_tex(&lower_teal_lam, (t_texture*)&lower_teal);
+
+	t_quad q1 = quad(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), (t_material*)&left_red_lam);
+	t_quad q2 = quad(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), (t_material*)&back_green_lam);
+	t_quad q3 = quad(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), (t_material*)&right_blue_lam);
+	t_quad q4 = quad(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), (t_material*)&upper_orange_lam);
+	t_quad q5 = quad(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), (t_material*)&lower_teal_lam);
+
+	t_hittable *list[5];
+
+	list[0] = (t_hittable*)(&q1);
+	list[1] = (t_hittable*)(&q2);
+	list[2] = (t_hittable*)(&q3);
+	list[3] = (t_hittable*)(&q4);
+	list[4] = (t_hittable*)(&q5);
+	const t_hittablelist world = hittablelist(list, 5);
+	
+	// init camera
+
+    t_camera c = camera();
+
+	printf("camera init done ================ ");
+	// render
+	render(c, world);
+
+
+	// world.add(make_shared<quad>(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
+    // world.add(make_shared<quad>(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
+    // world.add(make_shared<quad>(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
+    // world.add(make_shared<quad>(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
+    // world.add(make_shared<quad>(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
+
+
+	return (0);
+}
+
+
+int main_earth()
 {
 	t_lambertian earth_surface;
 	t_rtw_image img;

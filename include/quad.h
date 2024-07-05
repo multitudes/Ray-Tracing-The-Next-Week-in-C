@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 09:07:01 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 10:32:17 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:44:54 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "interval.h"
 #include "material.h"
 #include "ray.h"
+#include "hittable.h"
 
 /*
  * A quad is a 4-pointed polygon in 3D space
@@ -32,6 +33,7 @@
  */
 typedef struct s_quad
 {
+	t_hittable  base;
 	t_point3	q;
 	t_vec3		u;
 	t_vec3		v;
