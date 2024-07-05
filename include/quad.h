@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 09:07:01 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 09:31:28 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:32:17 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define QUAD_H
 
 #include "vec3.h"
+#include "interval.h"
 #include "material.h"
+#include "ray.h"
 
 /*
  * A quad is a 4-pointed polygon in 3D space
@@ -36,8 +38,11 @@ typedef struct s_quad
 	t_material	*mat;
 	double		d;
 	t_vec3		normal;
+	t_vec3		w;
 }				t_quad;
 
-
+t_quad	quad(t_point3 q, t_vec3 u, t_vec3 v, t_material *mat);
+bool	hit_quad(const void* self, const t_ray *r, t_interval ray_t,  t_hit_record *rec);
+bool	is_interior(double a, double b, t_hit_record *rec);
 
 #endif
