@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 18:33:49 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 09:34:30 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_camera camera()
 	
 	// Calculate the u,v,w unit basis vectors for the camera coordinate frame.
     c.w = unit_vector(vec3substr(c.lookfrom, c.lookat));
-    c.u = unit_vector(vec3cross(c.vup, c.w));
-    c.v = vec3cross(c.w, c.u);
+    c.u = unit_vector(cross(c.vup, c.w));
+    c.v = cross(c.w, c.u);
 
 	// Calculate the vectors across the horizontal and down the vertical viewport edges.
     t_vec3 viewport_u = vec3multscalar(c.u, viewport_width);    // Vector across viewport horizontal edge

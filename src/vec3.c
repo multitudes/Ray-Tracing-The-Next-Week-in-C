@@ -134,7 +134,7 @@ double	dot(const t_vec3 a, const t_vec3 b)
 /*
 returns the cross product of a and b by value
 */
-t_vec3	vec3cross(const t_vec3 a, const t_vec3 b)
+t_vec3	cross(const t_vec3 a, const t_vec3 b)
 {
 	t_vec3 result;
 

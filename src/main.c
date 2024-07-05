@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/04 18:42:58 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 09:34:30 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int bouncing()
 				if (choose_mat < 0.8) 
 				{
 					// diffuse
-					t_color albedo = vec3cross(color_random(), color_random());
+					t_color albedo = cross(color_random(), color_random());
 					lambertian_init(&sphere_materials_lambertian[i], albedo);
 					spheres[i] = movingsphere(center, center2, 0.2, (t_material*)&sphere_materials_lambertian[i]); 
 					list[i] = (t_hittable*)&spheres[i];

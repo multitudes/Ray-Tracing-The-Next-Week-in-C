@@ -157,7 +157,12 @@ The `checker_texture_value` function will return the color of the texture at the
 This are some of the results we can get.
 
 <div style="text-align: center;">
+<img src="assets/checkerboard.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+<div style="text-align: center;">
+
 <img src="assets/two spheres.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+
 </div>
 
 ### Second try
@@ -274,15 +279,63 @@ This is how the sphere looks like with the earth image as a texture.
 <img src="assets/earth.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
-# Perlin Noise
+## Perlin Noise
+I skip this for now...
 
 
+## Quadrilaterals
+We'll name our new primitive a quad.  
+There are three geometric entities to define a quad:
 
+- Q, the starting corner.
+- u, a vector representing the first side. Q+u gives one of the corners adjacent to Q.
+- v, a vector representing the second side. Q+v gives the other corner adjacent to Q.
 
+These values are three-dimensional, even though a quad itself is a two-dimensional object
 
+Just as for spheres, we need to determine whether a given ray intersects the primitive, and if so, the various properties of that intersection (hit point, normal, texture coordinates and so forth).
 
+Ray-quad intersection will be determined in three steps:
 
+- finding the plane that contains that quad,
+- solving for the intersection of a ray and the quad-containing plane,
+- determining if the hit point lies inside the quad.
 
+I refer to the book for the mathemathics, but like for the sphere there is an implicit formula for a plane:
+$$
+Ax+By+Cz+D=0
+$$
+Here's an intuitive way to think of this formula: given the plane perpendicular to the normal vector $n=(A,B,C)$, and the position vector $v=(x,y,z)$ (that is, the vector from the origin to any point on the plane), then we can use the dot product to solve for D:
+$$
+n⋅v=D
+$$
+for any position on the plane. This is an equivalent formulation of the $Ax+By+Cz=D$ formula given above, only now in terms of vectors.  
+Now to find the intersection with some ray $R(t)=P+td$  
+Plugging in the ray equation, we get
+$$
+n⋅(P+td)=D
+$$
+Solving for t:
+$$
+n⋅P+n⋅td=D  
+$$
+$$
+n⋅P+t(n⋅d)=D  
+$$
+This gives us t.
+$$
+t = \frac{D - n \cdot P}{n \cdot d}
+$$
+
+## finding the plane for the quad
+
+We have quadrilateral parameters Q, u, and v, and want the corresponding equation of the plane containing the quad defined by these three values. 
+To get this, we just use the cross product of the two side vectors u and v:  
+$$
+n=unit_vector(u×v)
+$$
+
+So we add the double D and the normal to our quad struct.
 
 
 
