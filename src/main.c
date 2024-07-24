@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/24 18:25:10 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 18:34:09 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ int main() {
 	diffuse_light_init(&difflight, (t_texture*)&difflight_color);
 	t_quad q1 = quad(point3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), (t_material*)&difflight);
 
-	t_hittable *list[3];
+	t_sphere s3 = sphere(point3(0.0, 7, 0), 2.0, (t_material*)&difflight);
+
+	t_hittable *list[4];
 	list[0] = (t_hittable*)(&s1);
 	list[1] = (t_hittable*)(&s2);
 	list[2] = (t_hittable*)(&q1);
-	const t_hittablelist world = hittablelist(list, 3);
+	list[3] = (t_hittable*)(&s3);
+	const t_hittablelist world = hittablelist(list, 4);
 
 	
 	// init camera

@@ -534,6 +534,10 @@ This is the result of the light emission. It got my head scratching a bit... but
 
 Still some work to do on the emitting functions but the new background is working. We will have in the ray function a new parameter: `color_from_emission` which can be black for non emitting materials.  
 
+## one more light
+<div style="text-align: center;">
+<img src="assets/twolights.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
 
 
 
