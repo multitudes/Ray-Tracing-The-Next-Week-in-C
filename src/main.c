@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 12:31:56 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:57:02 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,9 @@ int main_checker()
 int bouncing()
 {
 	t_lambertian ground;
-   	lambertian_init(&ground, color(0.5, 0.5, 0.5));
+	t_solid_color ground_color;
+	solid_color_init(&ground_color, color(0.5, 0.5, 0.5));
+   	lambertian_init_tex(&ground, (t_texture*)&ground_color);
 	t_sphere s1 = sphere(point3(0.0, -1000, 0), 1000.0, (t_material*)&ground);
 	
 	t_hittable *list[500];
@@ -231,7 +233,9 @@ int bouncing()
 				{
 					// diffuse
 					t_color albedo = cross(color_random(), color_random());
-					lambertian_init(&sphere_materials_lambertian[i], albedo);
+					t_solid_color solid_color_albedo;
+					solid_color_init(&solid_color_albedo, albedo);
+					lambertian_init_tex(&sphere_materials_lambertian[i], (t_texture*)&solid_color_albedo);
 					spheres[i] = movingsphere(center, center2, 0.2, (t_material*)&sphere_materials_lambertian[i]); 
 					list[i] = (t_hittable*)&spheres[i];
 				} 
@@ -263,7 +267,9 @@ int bouncing()
 	dielectric_init(&material1, 1.50);
 
 	t_lambertian material2;
-	lambertian_init(&material2, color(0.4, 0.2, 0.1));
+	t_solid_color solid_color_material2;
+	solid_color_init(&solid_color_material2, color(0.4, 0.2, 0.1));
+	lambertian_init_tex(&material2,(t_texture*)&solid_color_material2);
 
 	t_metal material3;
 	metal_init(&material3, color(0.7, 0.6, 0.5), 0.0);

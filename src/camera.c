@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 10:55:19 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/05 14:30:01 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_camera camera()
 	c.image_width = 400; 					// Rendered image width in pixel count
     c.samples_per_pixel = 100;				// Count of random samples for each pixel
 	c.max_depth = 50;						// Maximum number of ray bounces into scene
-	
+
 	c.vfov = 80; 							// Vertical view angle (field of view)
     c.lookfrom = point3(0,0,9);			// Point camera is looking from
     c.lookat = point3(0,0,0);				// Point camera is looking at
@@ -123,7 +123,7 @@ void	render(t_camera c, const t_hittablelist world)
                 }
 			write_color(file, vec3multscalar(pixel_color, c.pixel_samples_scale));
 		}
-		// printf("\rScanlines remaining: %d\n", c.image_height - j - 1);
+		printf("\rScanlines remaining: %d\n", c.image_height - j - 1);
 	}
 	printf("\nDone.\n");
 	fclose(file);
@@ -135,19 +135,24 @@ t_color	ray_color(t_ray *r, const int depth, const t_hittablelist *world)
 	t_hit_record rec;
 	if (depth <= 0)
         return color(0,0,0);
-	if (world->hit(world, r, interval(0.001, INFINITY), &rec))
-	{
-		t_ray scattered;
-		t_color attenuation;
-		if (rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
-			return vec3mult(attenuation, ray_color(&scattered, depth - 1, world));
-		return color(0,0,0);
-	}
-	t_vec3 unit_direction = unit_vector(r->dir);
-	double a = 0.5 * (unit_direction.y + 1.0);
-	t_color start = vec3multscalar(color(1.0, 1.0, 1.0), 1.0 - a);
-	t_color end = vec3multscalar(color(0.5, 0.7, 1.0), a);
-	return vec3add(start, end);
+	
+	if (!world->hit(world, r, interval(0.001, INFINITY), &rec))
+		return color(0,0,0); // it should be the cam beckground but since this is c and raycolor is not a member func i have no access to cam
+	
+	t_ray scattered;
+	t_color attenuation;
+	t_color color_from_emission = rec.mat->emit(rec.mat, rec.u, rec.v, rec.p);
+	if (rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
+		return color_from_emission;
+		
+	t_color color_from_scatter = vec3mult(attenuation, ray_color(&scattered, depth-1, world));
+	return vec3add(color_from_emission, color_from_scatter);
+	
+	// t_vec3 unit_direction = unit_vector(r->dir);
+	// double a = 0.5 * (unit_direction.y + 1.0);
+	// t_color start = vec3multscalar(color(1.0, 1.0, 1.0), 1.0 - a);
+	// t_color end = vec3multscalar(color(0.5, 0.7, 1.0), a);
+	// return vec3add(start, end);
 }
 
 /*

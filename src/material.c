@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 15:43:42 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/03 13:15:03 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 17:07:04 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,19 @@
 #include "vec3.h"
 #include "color.h"
 
-// Example of creating a lambertian material
-// t_lambertian lambertian_material;
-
-// Function to initialize a Lambertian material
-void lambertian_init(t_lambertian *lambertian_material, t_color albedo) 
-{
-    lambertian_material->base.scatter = lambertian_scatter; // Assign the scatter function
-    lambertian_material->albedo = albedo; // Set the albedo
-	t_solid_color solid_color_texture; // set the tex from the albedo
-	solid_color_init(&solid_color_texture, albedo);
-	lambertian_material->texture = (t_texture *)&solid_color_texture;
-}
-
 void lambertian_init_tex(t_lambertian *lambertian_material, t_texture *tex) 
 {
     lambertian_material->base.scatter = lambertian_scatter; // Assign the scatter function
+	lambertian_material->base.emit = emitzero;
     lambertian_material->albedo = color(0,0,0); // Set the albedo to null
 	lambertian_material->texture = tex;
 }
 
-void lambertian_add_texture(t_lambertian *lambertian_material, t_texture *tex)
-{
-	lambertian_material->texture = tex;
-}
 
 void metal_init(t_metal *metal, t_color albedo, double fuzz)
 {
 	metal->base.scatter = metal_scatter;
+	metal->base.emit = emitzero;
 	metal->albedo = albedo;
 	metal->fuzz = fuzz < 1 ? fuzz : 1;
 }
@@ -53,9 +38,26 @@ void metal_init(t_metal *metal, t_color albedo, double fuzz)
 void dielectric_init(t_dielectric *dielectric, double refraction_index)
 {
 	dielectric->base.scatter = dielectric_scatter;
+	dielectric->base.emit = emitzero;
 	dielectric->refraction_index = refraction_index;
 }
 
+void diffuse_light_init(t_diffuse_light *light, t_texture *texture)
+{
+	light->base.scatter = noscatter;
+	light->base.emit = emitlight;
+	light->texture = texture;
+}
+
+bool noscatter(void *self, const t_ray *r_in, const t_hit_record *rec, t_color *attenuation, t_ray *scattered)
+{
+	(void)self;
+	(void)r_in;
+	(void)rec;
+	(void)attenuation;
+	(void)scattered;
+	return false;
+}
 /*
  * scatter function for a lambertian material
  */
@@ -114,4 +116,19 @@ bool dielectric_scatter(void *self, const t_ray* r_in, const t_hit_record *rec, 
 	*scattered = ray(rec->p, direction, r_in->tm);
 
 	return true;
+}
+
+t_color		emitlight(void *self, double u, double v, t_point3 p)
+{
+	t_diffuse_light *light = (t_diffuse_light *)self;
+	return light->texture->value(light->texture ,u, v, &p);
+}
+
+t_color		emitzero(void *self, double u, double v, t_point3 p)
+{
+	(void)self;
+	(void)u;
+	(void)v;
+	(void)p;
+	return color(0, 0, 0);
 }

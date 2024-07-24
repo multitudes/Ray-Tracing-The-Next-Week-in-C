@@ -459,6 +459,16 @@ bool is_interior_disk(double a, double b, t_hit_record *rec, t_vec3 u, t_vec3 v)
 }
 ```
 
+## Lights
+
+Early simple raytracers used abstract light sources, like points in space, or directions. Modern approaches have more physically based lights, which have position and size. To create such light sources, we need to be able to take any regular object and turn it into something that emits light into our scene. 
+
+### Diffuse Light
+Like the background, it just tells the ray what color it is and performs no reflection. We will add to the material type a new struct in c:
+```c
+
+```
+
 
 
 
