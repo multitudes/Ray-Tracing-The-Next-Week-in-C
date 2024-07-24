@@ -463,13 +463,66 @@ bool is_interior_disk(double a, double b, t_hit_record *rec, t_vec3 u, t_vec3 v)
 
 Early simple raytracers used abstract light sources, like points in space, or directions. Modern approaches have more physically based lights, which have position and size. To create such light sources, we need to be able to take any regular object and turn it into something that emits light into our scene. 
 
-### Diffuse Light
+We two different types of ambient lighting models that simulate how light interacts with surfaces.
+
+- Diffuse Light is the light that comes from a specific direction and reflects off surfaces in many directions. It is the result of light hitting a rough or matte surface, causing the light to scatter.
+Characteristics: This type of lighting is characterized by its uniform scattering, meaning the light is reflected equally in all directions from the point of contact. It does not produce a shiny reflection or glare.  
+Appearance: Objects illuminated by diffuse light show variations in brightness based on their orientation to the light source and the light's intensity. The parts of the object facing the light source are brighter than those facing away.  
+Calculation: It is often calculated using the Lambertian reflectance model, which considers the angle between the light source and the surface normal to determine the intensity of the reflected light.  
+
+- Ambient Light is a simplified model to represent light that has been scattered so much by the environment that its direction is impossible to determine. It's an approximation of indirect light.  
+Characteristics: Ambient light is uniform and omnidirectional, meaning it illuminates all objects equally, regardless of their position or orientation in the scene.
+Appearance: It provides a base level of light so that all objects are minimally visible, preventing any part of the scene from being completely black in the absence of direct or diffuse light.
+Purpose: The primary purpose of ambient light is to simulate the complex and computationally expensive effects of global illumination in a simplified manner, ensuring that no parts of the scene are entirely devoid of light.
+
+### Emissive materials
 Like the background, it just tells the ray what color it is and performs no reflection. We will add to the material type a new struct in c:
+
 ```c
 
+typedef struct 		s_diffuse_light
+{
+	t_material		base;
+	t_texture		*texture;
+	
+}					t_diffuse_light;
 ```
 
+and two functions to handle the light emission. They will be a function pointer in the t_material base:
+```c
+typedef struct 		s_material
+{
+	bool 			(*scatter)(void *self, const t_ray *r_in, const t_hit_record *rec, t_color *attenuation, t_ray *scattered);
+	t_color			(*emit)(void *self, double u, double v, t_point3);
+}					t_material;
+```
+The default is emitzero.
+For light sources, we will use the emitlight function.
 
+```c
+t_color		emitlight(void *self, double u, double v, t_point3 p)
+{
+	t_diffuse_light *light = (t_diffuse_light *)self;
+	return light->texture->value(light->texture ,u, v, &p);
+}
+
+t_color		emitzero(void *self, double u, double v, t_point3 p)
+{
+	(void)self;
+	(void)u;
+	(void)v;
+	(void)p;
+	return color(0, 0, 0);
+}
+```
+
+Also since we added a new background color property in our cam we can use this as ambient light. For now with the new light emit functions the background color is the ambient light.  
+
+<div style="text-align: center;">
+<img src="assets/new_background_color_in_cam.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
+Still some work to do on the emitting functions but the new background is working
 
 
 ## links

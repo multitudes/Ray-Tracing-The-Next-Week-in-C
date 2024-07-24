@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 14:57:02 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 17:18:16 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int main()
 	// init camera
 
     t_camera c = camera();
-
+	c.background        = color(0.70, 0.80, 1.00);
+	
 	printf("camera init done ================ ");
 	// render
 	render(c, world);
@@ -138,7 +139,7 @@ int main_two_spheres_checker()
 		// init camera
 
     t_camera c = camera();
-
+ 	c.background        = color(0.70, 0.80, 1.00);
 	printf("camera init done ================ ");
 	// render
 	render(c, world);
