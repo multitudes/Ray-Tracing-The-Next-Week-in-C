@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/24 17:16:05 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 18:21:53 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ t_camera camera()
 	c.image_width = 400; 					// Rendered image width in pixel count
     c.samples_per_pixel = 100;				// Count of random samples for each pixel
 	c.max_depth = 50;						// Maximum number of ray bounces into scene
+	c.background = color(0,0,0);			// Scene background color
 
-	c.vfov = 80; 							// Vertical view angle (field of view)
-    c.lookfrom = point3(0,0,9);			// Point camera is looking from
-    c.lookat = point3(0,0,0);				// Point camera is looking at
+	c.vfov = 20; 							// Vertical view angle (field of view)
+    c.lookfrom = point3(26,3,6);			// Point camera is looking from
+    c.lookat = point3(0,2,0);				// Point camera is looking at
     c.vup = vec3(0,1,0);					// Camera-relative "up" direction
 	
     c.defocus_angle = 0; 					// Variation angle of rays through each pixel
     c.focus_dist = 10;						// Distance from camera lookfrom point to plane of perfect focus
 
-	c.background = color(0,0,0);			// Scene background color
 
 	// initialize the camera from public members
 	c.image_height = (double)c.image_width / c.aspect_ratio;
@@ -145,10 +145,12 @@ t_color	ray_color(t_camera cam, t_ray *r, const int depth, const t_hittablelist 
 	t_ray scattered;
 	t_color attenuation;
 	t_color color_from_emission = rec.mat->emit(rec.mat, rec.u, rec.v, rec.p);
-	if (rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
+	
+	if (!rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
 		return color_from_emission;
 		
 	t_color color_from_scatter = vec3mult(attenuation, ray_color(cam, &scattered, depth-1, world));
+	
 	return vec3add(color_from_emission, color_from_scatter);
 	
 	// t_vec3 unit_direction = unit_vector(r->dir);

@@ -475,6 +475,16 @@ Characteristics: Ambient light is uniform and omnidirectional, meaning it illumi
 Appearance: It provides a base level of light so that all objects are minimally visible, preventing any part of the scene from being completely black in the absence of direct or diffuse light.
 Purpose: The primary purpose of ambient light is to simulate the complex and computationally expensive effects of global illumination in a simplified manner, ensuring that no parts of the scene are entirely devoid of light.
 
+## new background color
+
+from now on the background will be a property of the camera. 
+Also since we added a new background color property in our cam we can use this as ambient light. For now with the new light emit functions the background color is the ambient light.  
+
+
+<div style="text-align: center;">
+<img src="assets/new_background_color_in_cam.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
 ### Emissive materials
 Like the background, it just tells the ray what color it is and performs no reflection. We will add to the material type a new struct in c:
 
@@ -516,13 +526,15 @@ t_color		emitzero(void *self, double u, double v, t_point3 p)
 }
 ```
 
-Also since we added a new background color property in our cam we can use this as ambient light. For now with the new light emit functions the background color is the ambient light.  
-
+This is the result of the light emission. It got my head scratching a bit... but I got it.
 <div style="text-align: center;">
-<img src="assets/new_background_color_in_cam.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+<img src="assets/first_light.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
-Still some work to do on the emitting functions but the new background is working
+
+Still some work to do on the emitting functions but the new background is working. We will have in the ray function a new parameter: `color_from_emission` which can be black for non emitting materials.  
+
+
 
 
 ## links

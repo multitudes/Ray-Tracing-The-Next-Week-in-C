@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:37:25 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/24 17:06:31 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 18:23:57 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct 		s_material
 {
 	bool 			(*scatter)(void *self, const t_ray *r_in, const t_hit_record *rec, t_color *attenuation, t_ray *scattered);
 	t_color			(*emit)(void *self, double u, double v, t_point3);
+
 }					t_material;
 
 // Define a structure for Lambertian material

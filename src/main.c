@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/24 17:18:16 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 18:25:10 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,48 @@
 #include "quad.h"
 #include "disk.h"
 
-int main()
+int main() {
+
+	t_lambertian ground;
+	t_solid_color ground_color;
+	solid_color_init(&ground_color, color(0.5, 0.5, 0.5));
+   	lambertian_init_tex(&ground, (t_texture*)&ground_color);
+	t_sphere s1 = sphere(point3(0.0, -1000, 0), 1000.0, (t_material*)&ground);
+	
+	t_lambertian smallsphere;
+	t_solid_color smallsphere_color;
+	solid_color_init(&smallsphere_color, color(0.7, 0.1, 0.1));
+   	lambertian_init_tex(&smallsphere, (t_texture*)&smallsphere_color);
+	t_sphere s2 = sphere(point3(0.0, 2, 0), 2.0, (t_material*)&ground);
+
+// create a light source
+	t_diffuse_light difflight;
+	t_solid_color difflight_color;
+	solid_color_init(&difflight_color, color(4, 4, 4));
+	diffuse_light_init(&difflight, (t_texture*)&difflight_color);
+	t_quad q1 = quad(point3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), (t_material*)&difflight);
+
+	t_hittable *list[3];
+	list[0] = (t_hittable*)(&s1);
+	list[1] = (t_hittable*)(&s2);
+	list[2] = (t_hittable*)(&q1);
+	const t_hittablelist world = hittablelist(list, 3);
+
+	
+	// init camera
+
+    t_camera c = camera();
+	c.background        = color(0.0, 0.0, 0.0);
+	
+	printf("camera init done ================ ");
+	// render
+	render(c, world);
+
+	return (0);
+
+}
+
+int quads()
 {
 	t_solid_color left_red;
 	t_solid_color back_green;
@@ -48,6 +89,7 @@ int main()
 	solid_color_init(&lower_teal, color(0.2, 0.5, 1.0));
 
 
+	// materials
 	t_lambertian left_red_lam;
 	t_lambertian back_green_lam;
 	t_lambertian right_blue_lam;
@@ -84,14 +126,6 @@ int main()
 	printf("camera init done ================ ");
 	// render
 	render(c, world);
-
-
-	// world.add(make_shared<quad>(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
-    // world.add(make_shared<quad>(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
-    // world.add(make_shared<quad>(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
-    // world.add(make_shared<quad>(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
-    // world.add(make_shared<quad>(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
-
 
 	return (0);
 }
