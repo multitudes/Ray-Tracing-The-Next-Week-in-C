@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/05 14:30:01 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/24 17:16:05 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_camera camera()
 	
     c.defocus_angle = 0; 					// Variation angle of rays through each pixel
     c.focus_dist = 10;						// Distance from camera lookfrom point to plane of perfect focus
+
+	c.background = color(0,0,0);			// Scene background color
 
 	// initialize the camera from public members
 	c.image_height = (double)c.image_width / c.aspect_ratio;
@@ -118,7 +120,7 @@ void	render(t_camera c, const t_hittablelist world)
 			t_color pixel_color = color(0,0,0);
             for (int sample = 0; sample < c.samples_per_pixel; sample++) {
                     t_ray r = get_ray(&c, i, j);
-					t_color partial = ray_color(&r, c.max_depth, &world);
+					t_color partial = ray_color(c, &r, c.max_depth, &world);
                     pixel_color = vec3add(pixel_color, partial);
                 }
 			write_color(file, vec3multscalar(pixel_color, c.pixel_samples_scale));
@@ -130,14 +132,15 @@ void	render(t_camera c, const t_hittablelist world)
 }
 
 
-t_color	ray_color(t_ray *r, const int depth, const t_hittablelist *world)
+t_color	ray_color(t_camera cam, t_ray *r, const int depth, const t_hittablelist *world)
 {
 	t_hit_record rec;
+	
 	if (depth <= 0)
         return color(0,0,0);
 	
 	if (!world->hit(world, r, interval(0.001, INFINITY), &rec))
-		return color(0,0,0); // it should be the cam beckground but since this is c and raycolor is not a member func i have no access to cam
+		return cam.background; // it should be the cam beckground but since this is c and raycolor is not a member func i have no access to cam
 	
 	t_ray scattered;
 	t_color attenuation;
@@ -145,7 +148,7 @@ t_color	ray_color(t_ray *r, const int depth, const t_hittablelist *world)
 	if (rec.mat->scatter(rec.mat, r, &rec, &attenuation, &scattered))
 		return color_from_emission;
 		
-	t_color color_from_scatter = vec3mult(attenuation, ray_color(&scattered, depth-1, world));
+	t_color color_from_scatter = vec3mult(attenuation, ray_color(cam, &scattered, depth-1, world));
 	return vec3add(color_from_emission, color_from_scatter);
 	
 	// t_vec3 unit_direction = unit_vector(r->dir);
