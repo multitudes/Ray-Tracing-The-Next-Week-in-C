@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/24 18:34:09 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/25 10:43:16 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,114 @@
 #include "quad.h"
 #include "disk.h"
 
-int main() {
+typedef struct s_box {
+    t_quad q1;
+    t_quad q2;
+    t_quad q3;
+    t_quad q4;
+    t_quad q5;
+    t_quad q6;
+} t_box;
+
+void create_white_box(t_box *box, t_point3 a, t_point3 b, t_material *mat);
+
+void create_white_box(t_box *box, t_point3 a, t_point3 b, t_material *mat)
+{
+  	t_point3 min = point3(fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z));
+    t_point3 max = point3(fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z));
+
+    t_vec3 dx = vec3(max.x - min.x, 0, 0);
+    t_vec3 dy = vec3(0, max.y - min.y, 0);
+    t_vec3 dz = vec3(0, 0, max.z - min.z);
+
+    box->q1 = quad(point3(min.x, min.y, max.z),  dx,  dy, mat); // front
+    box->q2 = quad(point3(max.x, min.y, max.z), vec3negate(dz),  dy, mat); // right
+    box->q3 = quad(point3(max.x, min.y, min.z), vec3negate(dx),  dy, mat); // back
+    box->q4 = quad(point3(min.x, min.y, min.z),  dz,  dy, mat); // left
+    box->q5 = quad(point3(min.x, max.y, max.z),  dx, vec3negate(dz), mat); // top
+    box->q6 = quad(point3(min.x, min.y, min.z),  dx,  dz, mat); // bottom
+}
+
+
+
+
+int main()
+{
+	// the cornells box
+	t_solid_color red;
+	t_solid_color white;
+	t_solid_color green;
+	t_solid_color light;
+
+	solid_color_init(&red, color(.65, 0.05, 0.05));
+	solid_color_init(&white, color(0.73, 0.73, 0.73));
+	solid_color_init(&green, color(0.12, 0.45, .15));
+	solid_color_init(&light, color(15.0, 15.0, 15.0));
+
+	// materials
+	t_lambertian red_lam;
+	t_lambertian white_lam;
+	t_lambertian green_lam;
+	t_diffuse_light light_diff;
+
+	lambertian_init_tex(&red_lam, (t_texture*)&red);
+	lambertian_init_tex(&white_lam, (t_texture*)&white);
+	lambertian_init_tex(&green_lam, (t_texture*)&green);
+	diffuse_light_init(&light_diff, (t_texture*)&light);
+
+	t_quad q1 = quad(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), (t_material*)&green_lam);
+	t_quad q2 = quad(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), (t_material*)&red_lam);
+	t_quad q3 = quad(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), (t_material*)&light_diff);
+	t_quad q4 = quad(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), (t_material*)&white_lam);
+	t_quad q5 = quad(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), (t_material*)&white_lam);
+	t_quad q6 = quad(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), (t_material*)&white_lam);
+	
+	t_hittable *list[20];
+	int i = 0;
+	list[i++] = (t_hittable*)(&q1);
+	list[i++] = (t_hittable*)(&q2);
+	list[i++] = (t_hittable*)(&q3);
+	list[i++] = (t_hittable*)(&q4);
+	list[i++] = (t_hittable*)(&q5);
+	list[i++] = (t_hittable*)(&q6);
+	
+	// add box
+	// Returns the 3D box (six sides) that contains the two opposite vertices a & b.
+	t_box box = {0};
+	create_white_box(&box, point3(130, 0, 65), point3(295, 165, 230), (t_material*)&white_lam);
+	
+	// add to list
+	list[i++] = (t_hittable*)(&box.q1);
+	list[i++] = (t_hittable*)(&box.q2);
+	list[i++] = (t_hittable*)(&box.q3);
+	list[i++] = (t_hittable*)(&box.q4);
+	list[i++] = (t_hittable*)(&box.q5);
+	list[i++] = (t_hittable*)(&box.q6);
+	
+	t_box box2 = {0};
+	create_white_box(&box2, point3(265, 0, 295), point3(430, 330, 460), (t_material*)&white_lam);
+	
+	// add to list
+	list[i++] = (t_hittable*)(&box2.q1);
+	list[i++] = (t_hittable*)(&box2.q2);
+	list[i++] = (t_hittable*)(&box2.q3);
+	list[i++] = (t_hittable*)(&box2.q4);
+	list[i++] = (t_hittable*)(&box2.q5);
+	list[i++] = (t_hittable*)(&box2.q6);
+	
+	const t_hittablelist world = hittablelist(list, i);
+	
+	// init camera
+    t_camera c = camera();
+	c.background        = color(0, 0, 0);
+
+	// render
+	render(c, world);
+
+	return (0);
+}
+
+int lights() {
 
 	t_lambertian ground;
 	t_solid_color ground_color;
@@ -50,7 +157,7 @@ int main() {
 // create a light source
 	t_diffuse_light difflight;
 	t_solid_color difflight_color;
-	solid_color_init(&difflight_color, color(4, 4, 4));
+	solid_color_init(&difflight_color, color(4, 2, 2));
 	diffuse_light_init(&difflight, (t_texture*)&difflight_color);
 	t_quad q1 = quad(point3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), (t_material*)&difflight);
 

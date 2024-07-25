@@ -539,6 +539,101 @@ Still some work to do on the emitting functions but the new background is workin
 <img src="assets/twolights.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
+## Cornell Box
+The “Cornell Box” was introduced in 1984 to model the interaction of light between diffuse surfaces. Let’s make the 5 walls and the light of the box. This is how it looks in my main. Since I dont have classes in C I use only struct and functions to initialize those stucts and everything is kept on the stack.
+```c
+	// the cornells box
+	t_solid_color red;
+	t_solid_color white;
+	t_solid_color green;
+	t_solid_color light;
+
+	solid_color_init(&red, color(.65, 0.05, 0.05));
+	solid_color_init(&white, color(0.73, 0.73, 0.73));
+	solid_color_init(&green, color(0.12, 0.45, .15));
+	solid_color_init(&light, color(15.0, 15.0, 15.0));
+
+	// materials
+	t_lambertian red_lam;
+	t_lambertian white_lam;
+	t_lambertian green_lam;
+	t_diffuse_light light_diff;
+
+	lambertian_init_tex(&red_lam, (t_texture*)&red);
+	lambertian_init_tex(&white_lam, (t_texture*)&white);
+	lambertian_init_tex(&green_lam, (t_texture*)&green);
+	diffuse_light_init(&light_diff, (t_texture*)&light);
+
+	t_quad q1 = quad(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), (t_material*)&green_lam);
+	t_quad q2 = quad(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), (t_material*)&red_lam);
+	t_quad q3 = quad(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), (t_material*)&light_diff);
+	t_quad q4 = quad(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), (t_material*)&white_lam);
+	t_quad q5 = quad(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), (t_material*)&white_lam);
+	t_quad q6 = quad(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), (t_material*)&white_lam);
+	
+	t_hittable *list[6];
+
+	list[0] = (t_hittable*)(&q1);
+	list[1] = (t_hittable*)(&q2);
+	list[2] = (t_hittable*)(&q3);
+	list[3] = (t_hittable*)(&q4);
+	list[4] = (t_hittable*)(&q5);
+	list[5] = (t_hittable*)(&q6);
+	const t_hittablelist world = hittablelist(list, 6);
+	
+	// init camera
+    t_camera c = camera();
+	c.background        = color(0, 0, 0);
+
+	// render
+	render(c, world);
+```
+
+The result as expected is this:
+<div style="text-align: center;">
+<img src="assets/cornellbox.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
+## Boxes
+Boxes are composite images made up of six quadrilaterals. We will create a box struct 
+```c
+typedef struct s_box {
+    t_quad q1;
+    t_quad q2;
+    t_quad q3;
+    t_quad q4;
+    t_quad q5;
+    t_quad q6;
+} t_box;
+```
+This will be on the stack and passed to a function to create a box.  
+```c
+
+void create_white_box(t_box *box, t_point3 a, t_point3 b, t_material *mat)
+{
+  	t_point3 min = point3(fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z));
+    t_point3 max = point3(fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z));
+
+    t_vec3 dx = vec3(max.x - min.x, 0, 0);
+    t_vec3 dy = vec3(0, max.y - min.y, 0);
+    t_vec3 dz = vec3(0, 0, max.z - min.z);
+
+    box->q1 = quad(point3(min.x, min.y, max.z),  dx,  dy, mat); // front
+    box->q2 = quad(point3(max.x, min.y, max.z), vec3negate(dz),  dy, mat); // right
+    box->q3 = quad(point3(max.x, min.y, min.z), vec3negate(dx),  dy, mat); // back
+    box->q4 = quad(point3(min.x, min.y, min.z),  dz,  dy, mat); // left
+    box->q5 = quad(point3(min.x, max.y, max.z),  dx, vec3negate(dz), mat); // top
+    box->q6 = quad(point3(min.x, min.y, min.z),  dx,  dz, mat); // bottom
+}
+```
+
+I will add then the 6 quadrilateral to the world hit list one by one...
+and I finally get this
+
+<div style="text-align: center;">
+<img src="assets/cornellbox3.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
 
 
 ## links
