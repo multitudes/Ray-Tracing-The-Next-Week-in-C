@@ -634,6 +634,9 @@ and I finally get this
 <img src="assets/cornellbox3.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
 </div>
 
+## instance translation
+In Ray Tracing it is usual to have a scene with instances of a primitive, and instead of creating it again just use an offset in the ray hit function to "move" the object.
+
 
 
 ## links

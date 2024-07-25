@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 10:43:16 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/25 11:42:12 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,7 @@
 #include "rtw_stb_image.h"
 #include "quad.h"
 #include "disk.h"
-
-typedef struct s_box {
-    t_quad q1;
-    t_quad q2;
-    t_quad q3;
-    t_quad q4;
-    t_quad q5;
-    t_quad q6;
-} t_box;
-
-void create_white_box(t_box *box, t_point3 a, t_point3 b, t_material *mat);
-
-void create_white_box(t_box *box, t_point3 a, t_point3 b, t_material *mat)
-{
-  	t_point3 min = point3(fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z));
-    t_point3 max = point3(fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z));
-
-    t_vec3 dx = vec3(max.x - min.x, 0, 0);
-    t_vec3 dy = vec3(0, max.y - min.y, 0);
-    t_vec3 dz = vec3(0, 0, max.z - min.z);
-
-    box->q1 = quad(point3(min.x, min.y, max.z),  dx,  dy, mat); // front
-    box->q2 = quad(point3(max.x, min.y, max.z), vec3negate(dz),  dy, mat); // right
-    box->q3 = quad(point3(max.x, min.y, min.z), vec3negate(dx),  dy, mat); // back
-    box->q4 = quad(point3(min.x, min.y, min.z),  dz,  dy, mat); // left
-    box->q5 = quad(point3(min.x, max.y, max.z),  dx, vec3negate(dz), mat); // top
-    box->q6 = quad(point3(min.x, min.y, min.z),  dx,  dz, mat); // bottom
-}
-
-
+#include "box.h"
 
 
 int main()
@@ -107,7 +78,7 @@ int main()
 	// add box
 	// Returns the 3D box (six sides) that contains the two opposite vertices a & b.
 	t_box box = {0};
-	create_white_box(&box, point3(130, 0, 65), point3(295, 165, 230), (t_material*)&white_lam);
+	create_box(&box, point3(130, 0, 65), point3(295, 165, 230), (t_material*)&white_lam);
 	
 	// add to list
 	list[i++] = (t_hittable*)(&box.q1);
@@ -118,7 +89,7 @@ int main()
 	list[i++] = (t_hittable*)(&box.q6);
 	
 	t_box box2 = {0};
-	create_white_box(&box2, point3(265, 0, 295), point3(430, 330, 460), (t_material*)&white_lam);
+	create_box(&box2, point3(265, 0, 295), point3(430, 330, 460), (t_material*)&white_lam);
 	
 	// add to list
 	list[i++] = (t_hittable*)(&box2.q1);
