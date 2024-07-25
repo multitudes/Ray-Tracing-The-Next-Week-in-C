@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   box.h                                              :+:      :+:    :+:   */
+/*   translated.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/25 11:38:14 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 13:42:55 by lbrusa           ###   ########.fr       */
+/*   Created: 2024/07/25 11:46:22 by lbrusa            #+#    #+#             */
+/*   Updated: 2024/07/25 12:35:32 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef TRANSLATED_H
+# define TRANSLATED_H
 
-#ifndef BOX_H
-# define BOX_H
+#include "hittable.h"
 
-#include "vec3.h"
-#include "ray.h"
-#include "quad.h"
-#include "material.h"
-
-
-typedef struct s_box {
+typedef struct 	s_translated
+{
 	t_hittable  base;
-    t_quad q1;
-    t_quad q2;
-    t_quad q3;
-    t_quad q4;
-    t_quad q5;
-    t_quad q6;
-} t_box;
+	t_hittable 	*obj;
+	t_vec3 		offset;
+} 				t_translated;
 
-
-t_box box(t_box *box, t_point3 a, t_point3 b, t_material *mat);
-
+bool			hit_translated(const void* self, const t_ray *r, t_interval ray_t, t_hit_record *rec);
 
 #endif
+
