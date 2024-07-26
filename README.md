@@ -637,7 +637,76 @@ and I finally get this
 ## instance translation
 In Ray Tracing it is usual to have a scene with instances of a primitive, and instead of creating it again just use an offset in the ray hit function to "move" the object.
 
+Especially when rotating, the order matters. In the example in the book, I create the box at 0.0.0 and move it to destinaltion. But if I want to rotate I have to rotate the box first and then move it.
 
+I refer to the book as an explanation of the rotation and translations. In any case, the rotation can be thought as a change of coordinates.
+
+I created a function to rotate the box around the y axis.  The book does it with classes but I create a new rotated object and return it.  The roatation will be also implememted in the hit function of the object. I have to create a new hit function "rotating" the object...
+
+```c
+bool	hit_rotated(const void *self, const t_ray *r, t_interval ray_t, t_hit_record *rec)
+{
+	t_rotated_y *rot_y;
+	t_point3 origin;
+	t_vec3 direction;
+
+	rot_y = (t_rotated_y *)self;
+	origin = r->orig;
+	direction = r->dir;
+
+	// Rotate the ray's origin and direction. this will be similar for the other rotations
+	// on the other axes	
+	origin.x = rot_y->cos_theta * r->orig.x - rot_y->sin_theta * r->orig.z;
+	origin.z = rot_y->sin_theta * r->orig.x + rot_y->cos_theta * r->orig.z;
+
+	direction.x = rot_y->cos_theta * r->dir.x - rot_y->sin_theta * r->dir.z;
+	direction.z = rot_y->sin_theta * r->dir.x + rot_y->cos_theta * r->dir.z;
+
+	t_ray rotated_r = ray(origin, direction, r->tm);
+
+	// Determine whether an intersection exists in object space (and if so, where)
+	if (!rot_y->obj->hit(rot_y->obj, &rotated_r, ray_t, rec))
+		return (false);
+
+	t_point3 p = rec->p;
+
+	// Change the intersection point from object space to world space
+	p.x = rot_y->cos_theta * rec->p.x + rot_y->sin_theta * rec->p.z;
+	p.z = -rot_y->sin_theta * rec->p.x + rot_y->cos_theta * rec->p.z;
+
+	t_vec3 normal = rec->normal;
+
+	// Change the normal from object space to world space
+	normal.x = rot_y->cos_theta * rec->normal.x + rot_y->sin_theta * rec->normal.z;
+	normal.z = -rot_y->sin_theta * rec->normal.x + rot_y->cos_theta * rec->normal.z;
+	
+	rec->p = p;
+	rec->normal = normal;
+
+	return (true);
+}
+```
+
+and in main for ex with a white lambertian material:
+
+```c
+t_box box1 = box(point3(0, 0, 0), point3(165, 330, 165), (t_material*)&white_lam);
+t_rotated_y rotated_box2 = rotated_y((t_hittable*)(&box2), -18);
+
+// translate the box
+t_translated translated_box2 = translated((t_hittable*)(&rotated_box2), vec3(130,0,65));
+// add to the hittable list
+list[i++] = (t_hittable*)(&translated_box2);
+```
+
+Lots of castings to use the polymorphism in C.  But it works.  
+
+The result:
+<div style="text-align: center;">
+<img src="assets/rotations.png" alt="checker_texture" style="width: 70%;display: inline-block;" />
+</div>
+
+The noise you see is due to the low light samples for speed.  
 
 ## links
 - [Raytracing in one weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html)  
