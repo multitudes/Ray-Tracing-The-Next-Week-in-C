@@ -14,11 +14,11 @@ SRC_DIR			= src/
 INCLUDE			+= -I ./include 
 
 SRCS 			= $(addprefix $(SRC_DIR), main.c utils.c vec3.c color.c ray.c sphere.c hittable.c interval.c camera.c \
-material.c texture.c rtw_stb_image.c quad.c disk.c box.c) 
+material.c texture.c rtw_stb_image.c quad.c disk.c box.c translated.c rotated.c) 
 OBJS 			= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 HDRS 			= $(addprefix include/, box.h utils.h vec3.h color.h sphere.h ray.h hittable.h hittable_list.h \
 rtweekend.h interval.h camera.h material.h texture.h rtw_stb_image.h external/stb_image.h external/stb_image_write.h \
-quad.h disk.h) 
+quad.h disk.h translated.h rotated.h) 
 
 all: $(NAME)
 

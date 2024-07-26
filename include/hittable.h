@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:59:14 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/06/27 12:13:42 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 10:13:15 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct 	s_hittable{
 	bool (*hit)(const void *self, const t_ray* r, t_interval ray_t, t_hit_record* rec);
 } 				t_hittable;
 
+bool hit(const void *self, const t_ray* r, t_interval ray_t, t_hit_record* rec);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:13:20 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 13:10:44 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 09:50:50 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ bool	hit_rotated(const void *self, const t_ray *r, t_interval ray_t, t_hit_recor
 	t_rotated_y *rot_y;
 	t_point3 origin;
 	t_vec3 direction;
-
 
 	rot_y = (t_rotated_y *)self;
 	origin = r->orig;
@@ -56,7 +55,5 @@ bool	hit_rotated(const void *self, const t_ray *r, t_interval ray_t, t_hit_recor
 	rec->normal.x = rot_y->cos_theta * rec->normal.x + rot_y->sin_theta * rec->normal.z;
 	rec->normal.z = -rot_y->sin_theta * rec->normal.x + rot_y->cos_theta * rec->normal.z;
 	
-
-
 	return (true);
 }

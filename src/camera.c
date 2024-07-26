@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:28:07 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 08:38:51 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 10:54:22 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_camera camera()
 	
 	// public members
 	c.aspect_ratio = (double)16.0 / 16.0; 	// Ratio of image width over height
-	c.image_width = 600; 					// Rendered image width in pixel count
+	c.image_width = 200; 					// Rendered image width in pixel count
     c.samples_per_pixel = 200;				// Count of random samples for each pixel
 	c.max_depth = 50;						// Maximum number of ray bounces into scene
 	c.background = color(0,0,0);			// Scene background color

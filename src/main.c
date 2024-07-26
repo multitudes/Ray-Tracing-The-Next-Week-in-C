@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 11:42:12 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 11:17:36 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 #include "quad.h"
 #include "disk.h"
 #include "box.h"
-
+#include "translated.h"
+#include "rotated.h"
 
 int main()
 {
@@ -77,32 +78,41 @@ int main()
 	
 	// add box
 	// Returns the 3D box (six sides) that contains the two opposite vertices a & b.
-	t_box box = {0};
-	create_box(&box, point3(130, 0, 65), point3(295, 165, 230), (t_material*)&white_lam);
+	t_box box1 = box(point3(0, 0, 0), point3(165, 330, 165), (t_material*)&white_lam);
+	// create_box(&box, point3(130, 0, 65), point3(295, 165, 230), (t_material*)&white_lam);
 	
 	// add to list
-	list[i++] = (t_hittable*)(&box.q1);
-	list[i++] = (t_hittable*)(&box.q2);
-	list[i++] = (t_hittable*)(&box.q3);
-	list[i++] = (t_hittable*)(&box.q4);
-	list[i++] = (t_hittable*)(&box.q5);
-	list[i++] = (t_hittable*)(&box.q6);
+	// list[i++] = (t_hittable*)(&box.q1);
+	// list[i++] = (t_hittable*)(&box.q2);
+	// list[i++] = (t_hittable*)(&box.q3);
+	// list[i++] = (t_hittable*)(&box.q4);
+	// list[i++] = (t_hittable*)(&box.q5);
+	// list[i++] = (t_hittable*)(&box.q6);
 	
-	t_box box2 = {0};
-	create_box(&box2, point3(265, 0, 295), point3(430, 330, 460), (t_material*)&white_lam);
+	t_translated translated_box1 = translated((t_hittable*)(&box1), vec3(265,0,295));
+	// t_rotated_y rotated_box1 = rotated_y((t_hittable*)(&translated_box1), 15);
+	list[i++] = (t_hittable*)(&translated_box1);
+
+	// list[i++] = (t_hittable*)(&box1);
+
+	t_box box2 = box(point3(0, 0, 0), point3(165, 165, 165), (t_material*)&white_lam);
 	
 	// add to list
-	list[i++] = (t_hittable*)(&box2.q1);
-	list[i++] = (t_hittable*)(&box2.q2);
-	list[i++] = (t_hittable*)(&box2.q3);
-	list[i++] = (t_hittable*)(&box2.q4);
-	list[i++] = (t_hittable*)(&box2.q5);
-	list[i++] = (t_hittable*)(&box2.q6);
-	
+	// list[i++] = (t_hittable*)(&box2.q1);
+	// list[i++] = (t_hittable*)(&box2.q2);
+	// list[i++] = (t_hittable*)(&box2.q3);
+	// list[i++] = (t_hittable*)(&box2.q4);
+	// list[i++] = (t_hittable*)(&box2.q5);
+	// list[i++] = (t_hittable*)(&box2.q6);
+	// list[i++] = (t_hittable*)(&box2);
+
+	t_translated translated_box2 = translated((t_hittable*)(&box2), vec3(130,0,65));
+	list[i++] = (t_hittable*)(&translated_box2);
+
 	const t_hittablelist world = hittablelist(list, i);
 	
 	// init camera
-    t_camera c = camera();
+    t_camera c 			= camera();
 	c.background        = color(0, 0, 0);
 
 	// render

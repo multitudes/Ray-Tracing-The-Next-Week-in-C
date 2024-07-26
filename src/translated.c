@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:57 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/25 12:12:11 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 11:00:17 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_translated translated(t_hittable *obj, t_vec3 offset)
 	translated.base.hit = hit_translated;
 	translated.obj = obj;
 	translated.offset = offset;
+
+	return (translated);
 }
 
 bool		hit_translated(const void* self, const t_ray *r, t_interval ray_t, t_hit_record *rec)
