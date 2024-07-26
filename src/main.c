@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:45:44 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/26 11:17:36 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 12:57:49 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ int main()
 	// list[i++] = (t_hittable*)(&box.q5);
 	// list[i++] = (t_hittable*)(&box.q6);
 	
-	t_translated translated_box1 = translated((t_hittable*)(&box1), vec3(265,0,295));
-	// t_rotated_y rotated_box1 = rotated_y((t_hittable*)(&translated_box1), 15);
+	t_rotated_y rotated_box1 = rotated_y((t_hittable*)(&box1), 15);
+	t_translated translated_box1 = translated((t_hittable*)(&rotated_box1), vec3(265,0,295));
 	list[i++] = (t_hittable*)(&translated_box1);
 
 	// list[i++] = (t_hittable*)(&box1);
 
 	t_box box2 = box(point3(0, 0, 0), point3(165, 165, 165), (t_material*)&white_lam);
-	
+	t_rotated_y rotated_box2 = rotated_y((t_hittable*)(&box2), -18);
 	// add to list
 	// list[i++] = (t_hittable*)(&box2.q1);
 	// list[i++] = (t_hittable*)(&box2.q2);
@@ -106,7 +106,7 @@ int main()
 	// list[i++] = (t_hittable*)(&box2.q6);
 	// list[i++] = (t_hittable*)(&box2);
 
-	t_translated translated_box2 = translated((t_hittable*)(&box2), vec3(130,0,65));
+	t_translated translated_box2 = translated((t_hittable*)(&rotated_box2), vec3(130,0,65));
 	list[i++] = (t_hittable*)(&translated_box2);
 
 	const t_hittablelist world = hittablelist(list, i);

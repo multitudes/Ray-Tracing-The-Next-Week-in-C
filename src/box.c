@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:40:26 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/26 10:15:28 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 12:43:01 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,4 @@ bool hit_box(const void* self, const t_ray *r, t_interval ray_t,  t_hit_record *
 
 
 	return hit(&box_hittable_list, r, ray_t, rec);
-
-
 }

@@ -6,7 +6,7 @@
 /*   By: lbrusa <lbrusa@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:13:20 by lbrusa            #+#    #+#             */
-/*   Updated: 2024/07/26 09:50:50 by lbrusa           ###   ########.fr       */
+/*   Updated: 2024/07/26 12:57:31 by lbrusa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 t_rotated_y	rotated_y(t_hittable *obj, double angle)
 {
+	double radians; 
 	t_rotated_y rotated;
-
+	
+	radians = degrees_to_radians(angle);
 	rotated.base.hit = hit_rotated;
 	rotated.obj = obj;
-	rotated.sin_theta = sin(angle);
-	rotated.cos_theta = cos(angle);
+	rotated.sin_theta = sin(radians);
+	rotated.cos_theta = cos(radians);
 	return (rotated);
 }
 
@@ -43,17 +45,24 @@ bool	hit_rotated(const void *self, const t_ray *r, t_interval ray_t, t_hit_recor
 
 	t_ray rotated_r = ray(origin, direction, r->tm);
 
-// Determine whether an intersection exists in object space (and if so, where)
+	// Determine whether an intersection exists in object space (and if so, where)
 	if (!rot_y->obj->hit(rot_y->obj, &rotated_r, ray_t, rec))
 		return (false);
 
+	t_point3 p = rec->p;
+
 	// Change the intersection point from object space to world space
-	rec->p.x = rot_y->cos_theta * rec->p.x + rot_y->sin_theta * rec->p.z;
-	rec->p.z = -rot_y->sin_theta * rec->p.x + rot_y->cos_theta * rec->p.z;
+	p.x = rot_y->cos_theta * rec->p.x + rot_y->sin_theta * rec->p.z;
+	p.z = -rot_y->sin_theta * rec->p.x + rot_y->cos_theta * rec->p.z;
+
+	t_vec3 normal = rec->normal;
 
 	// Change the normal from object space to world space
-	rec->normal.x = rot_y->cos_theta * rec->normal.x + rot_y->sin_theta * rec->normal.z;
-	rec->normal.z = -rot_y->sin_theta * rec->normal.x + rot_y->cos_theta * rec->normal.z;
+	normal.x = rot_y->cos_theta * rec->normal.x + rot_y->sin_theta * rec->normal.z;
+	normal.z = -rot_y->sin_theta * rec->normal.x + rot_y->cos_theta * rec->normal.z;
 	
+	rec->p = p;
+	rec->normal = normal;
+
 	return (true);
 }
