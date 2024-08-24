@@ -1,4 +1,4 @@
-# Ray-Tracing-The-Next-Week-in-C
+# Ray Tracing The Next Week in C
 
 This project follows the popular tutorial series but translated to C. Pleae see [Raytracing the next week](https://raytracing.github.io/books/RayTracingTheNextWeek.html).  
 
